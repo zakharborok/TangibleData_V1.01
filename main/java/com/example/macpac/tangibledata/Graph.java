@@ -30,9 +30,17 @@ public class Graph
     {
         ArrayList<Point> examplePoints = new ArrayList<>();
 
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 14; i++)
         {
-            examplePoints.add(new Point((int) (i), (int) (Math.random() * 8192.0)));
+            int tempY = (int) (Math.random() * 8192.0);
+            examplePoints.add(new Point((int) (i), tempY));
+            while ((Math.random() * 8192.0) > 2500)
+            {
+                i++;
+                int tempY2 = tempY + ((int) (Math.random() * 1500.0) - 700);
+                if (tempY2 < 0) tempY2 = 0;
+                examplePoints.add(new Point((i), tempY2));
+            }
         }
 
         return resizeLinearPoints(examplePoints);
@@ -41,12 +49,6 @@ public class Graph
     public static ArrayList<Point> getExampleBarChartDataPoints()
     {
         ArrayList<Point> examplePoints = new ArrayList<>();
-        /*examplePoints.add(new Point(0, (Graph.HEIGHT / 5) * 4));
-        examplePoints.add(new Point(0, Graph.HEIGHT / 5));
-        examplePoints.add(new Point(0, Graph.HEIGHT / 5));
-        examplePoints.add(new Point(0, (Graph.HEIGHT / 5) * 4));
-        examplePoints.add(new Point(0, (Graph.HEIGHT / 5) * 2));//*/
-
 
         examplePoints.add(new Point(0, 10));
         examplePoints.add(new Point(0, 20));

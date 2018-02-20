@@ -19,9 +19,8 @@ public class DrawView extends View
     public DrawView(Context context)
     {
         super(context);
-//        Graph.points = Graph.getExampleBarChartDataPoints();
-        Graph.setPoints(Graph.resizeLinearPoints(GraphConverter.convertPoints()));
-        Graph.type = GraphConverter.getGraphType();
+        Graph.setPoints(Graph.getExampleLinerDataPoints());
+//        Graph.setPoints(Graph.resizeLinearPoints(GraphConverter.convertPoints()));
     }
 
     public DrawView(Context context, AttributeSet attrs)
