@@ -1,18 +1,22 @@
 package com.example.macpac.tangibledata;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 import static android.content.Context.VIBRATOR_SERVICE;
-import static java.lang.StrictMath.floor;
+
+import android.graphics.Point;
+import android.util.Log;
+
+import java.util.ArrayList;
+
 
 /**
  * Created by MacPac on 15/01/2018.
@@ -20,46 +24,48 @@ import static java.lang.StrictMath.floor;
 
 public class ResponseHandler
 {
+    public static final int SINGLE_PULSE_TIME_ABOVE = 600;
+    public static final int SINGLE_PULSE_TIME_BELOW = 200;
+    public static final int PULSE_STRENGHT_ABOVE = 250;
+    public static final int PULSE_STRENGHT_BELOW = 30;
+
     private Activity parentActivity;
-    private final int THRESHOLD;
-    private float LARGEST_VAL;
+    private HashMap<Integer, Integer> map;
+    private float LARGEST_Y_VAL;
     private long startTime;
     private int singlePulseTime = 100, pulseStength = -1;
     private ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-    private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 
-    public ResponseHandler(Activity parentActivity)
+
+    public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
     {
         this.parentActivity = parentActivity;
-        LARGEST_VAL = findTheLargestYVal();
+        LARGEST_Y_VAL = findTheLargestYVal(points);
+        map = new HashMap<>();
 
-        switch (Graph.getType())
+        switch (graphType)
         {
             case Graph.LINEAR_MODE:
-                THRESHOLD = Graph.HEIGHT / 10;
-                addAllLinearPointsToMap();
+                addAllLinearPointsToMap(points);
                 break;
 
             case Graph.BAR_CHART_MODE:
-                THRESHOLD = Graph.WIDTH / 10;
-                break;
-
-            default:
-                THRESHOLD = 0;
                 break;
         }
+
+
     }
 
-    private float findTheLargestYVal()
+    public float findTheLargestYVal(ArrayList<Point> listOfPoints)
     {
         float max = 0;
-        if (Graph.getPoints().size() > 0)
+        if (listOfPoints.size() > 0)
         {
-            max = Graph.getPoints().get(0).y;
-            for (int i = 0; i < Graph.getPoints().size(); i++)
+            max = listOfPoints.get(0).y;
+            for (int i = 0; i < listOfPoints.size(); i++)
             {
-                if (Graph.getPoints().get(i).y > max)
-                    max = Graph.getPoints().get(i).y;
+                if (listOfPoints.get(i).y > max)
+                    max = listOfPoints.get(i).y;
             }
         }
         return max;
@@ -76,7 +82,7 @@ public class ResponseHandler
             case Graph.BAR_CHART_MODE:
                 hundleTouchRepresentation(x, y);
                 break;
-        }
+        }//*/
     }
 
     private void hundleTouchNavigation(int x, int y)
@@ -85,7 +91,7 @@ public class ResponseHandler
         {
             int distanceToTheGraph = y - map.get(x);
 
-            if (Math.abs(distanceToTheGraph) < THRESHOLD)
+            if (Math.abs(distanceToTheGraph) < Resources.getSystem().getDisplayMetrics().widthPixels / 10)
             {
                 calculateSinglePulse(distanceToTheGraph);
 
@@ -103,26 +109,59 @@ public class ResponseHandler
     {
         int singleWidth = (int) ((Graph.X_OFFSET * 17) / Graph.getPoints().size());
         for (int i = 0; i < Graph.getPoints().size(); i++)
-            if (x > singleWidth * (i) + Graph.X_OFFSET * 1.1 && x < (singleWidth * (0.7 + i) + Graph.X_OFFSET * 1.1) && y > Graph.HEIGHT - Graph.points.get(i).y - Graph.Y_OFFSET * 2.05 && y < (Graph.HEIGHT - Graph.Y_OFFSET * 2.05))
+            if (x > singleWidth * (i) + Graph.X_OFFSET * 1.1 && x < (singleWidth * (0.7 + i) + Graph.X_OFFSET * 1.1) && y > Graph.HEIGHT - Graph.getPoints().get(i).y - Graph.Y_OFFSET * 2.05 && y < (Graph.HEIGHT - Graph.Y_OFFSET * 2.05))
             {
                 singlePulseTime = 500;
-                pulseStength = getPulseStrenght(Graph.HEIGHT - Graph.points.get(i).y);
-//                Log.d("ddd", pulseStength + "- is pulseStength");
-
-                toneGen1.startTone(pulseStength, singlePulseTime);
+                pulseStength = calculatePulseStrenght(Graph.HEIGHT - Graph.getPoints().get(i).y);
+                Log.d("ddd", pulseStength + "- is pulseStength");
+                toneGen1.startTone(pulseStength / 2, singlePulseTime);
                 shakeItBaby();
             }
     }
 
-    private int getPulseStrenght(int y)
+    public int calculatePulseStrenght(int y)
     {
-        int temp = 280 - (int) ((y / (LARGEST_VAL)) * 255);
+        int temp = (int) ((y / (LARGEST_Y_VAL)) * 255);
 
         if (temp < 5) return 5;
 
         if (temp > 250) return 250;
 
         return temp;
+    }
+
+    public void calculateSinglePulse(int distance)
+    {
+        if (distance < 0)
+        {
+            singlePulseTime = SINGLE_PULSE_TIME_BELOW;
+            pulseStength = PULSE_STRENGHT_BELOW;
+        } else
+        {
+            singlePulseTime = SINGLE_PULSE_TIME_ABOVE;
+            pulseStength = PULSE_STRENGHT_ABOVE;
+        }
+    }
+
+    private void addAllLinearPointsToMap(ArrayList<Point> listOfPoints)
+    {
+        if (listOfPoints.size() > 0)
+        {
+            for (int i = 1; i < listOfPoints.size(); i++)
+            {
+                addValuesToMap(listOfPoints.get(i - 1).x, listOfPoints.get(i - 1).y, listOfPoints.get(i).x, listOfPoints.get(i).y);
+            }
+        }
+    }
+
+    public void addValuesToMap(float stX, float stY, float endX, float endY)
+    {
+        float y_add = (endY - stY) / (endX - stX);
+        for (int i = (int) stX; i <= (int) endX; i++)
+        {
+            map.put(i, (int) stY);
+            stY += y_add;
+        }//*/
     }
 
     private void shakeItBaby()
@@ -136,52 +175,33 @@ public class ResponseHandler
         }
     }
 
-    private void calculateSinglePulse(int distance)
+    public void setLARGEST_Y_VAL(float LARGEST_Y_VAL)
     {
-        if (distance < 0)
-        {
-            singlePulseTime = 200;
-            pulseStength = 30;
-        } else
-        {
-            singlePulseTime = 600;
-            pulseStength = 250;
-        }
-
-//        Log.d("debuggg","time = " + singlePulseTime);
-//        Log.d("debuggg","strength = " + pulseStength);
+        this.LARGEST_Y_VAL = LARGEST_Y_VAL;
     }
 
-    private void addAllLinearPointsToMap()
+    public float getLARGEST_Y_VAL()
     {
-        if (Graph.getPoints().size() > 0)
-        {
-            for (int i = 1; i < Graph.getPoints().size(); i++)
-            {
-                addValuesToMap(Graph.getPoints().get(i - 1).x, Graph.getPoints().get(i - 1).y, Graph.getPoints().get(i).x, Graph.getPoints().get(i).y);
-            }
-        }
+        return LARGEST_Y_VAL;
     }
 
-    private void addAllBarChartPointsToMap()
+    public void setMap(HashMap<Integer, Integer> map)
     {
-        int singleWidth = (int) ((Graph.WIDTH * 0.8f) / Graph.getPoints().size());
-        if (Graph.getPoints().size() > 0)
-        {
-            for (int i = 0; i < Graph.getPoints().size(); i++)
-            {
-                addValuesToMap((float) (singleWidth * (0.8 + i)) - Graph.WIDTH * 0.1f, Graph.getPoints().get(i).y, (float) (singleWidth * (1.4 + i)) - Graph.WIDTH * 0.1f, Graph.getPoints().get(i).y);
-            }
-        }
+        this.map = map;
     }
 
-    private void addValuesToMap(float stX, float stY, float endX, float endY)
+    public int getSinglePulseTime()
     {
-        float y_add = (endY - stY) / (endX - stX);
-        for (int i = (int) stX; i < (int) endX; i++)
-        {
-            map.put(i, (int) stY);
-            stY += y_add;
-        }//*/
+        return singlePulseTime;
+    }
+
+    public int getPulseStength()
+    {
+        return pulseStength;
+    }
+
+    public HashMap<Integer, Integer> getMap()
+    {
+        return map;
     }
 }

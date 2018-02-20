@@ -24,7 +24,7 @@ public class GraphView extends Activity
         drawView = new DrawView(this);
         setContentView(drawView);
 
-        responseHandler = new ResponseHandler(this);
+        responseHandler = new ResponseHandler(this, Graph.getPoints(), Graph.type);
     }
 
     @Override

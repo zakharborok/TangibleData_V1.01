@@ -20,9 +20,10 @@ public class Graph
             HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
 
     public static int type;
-    public static ArrayList<Point> points;
     public static int X_OFFSET = Graph.WIDTH / 20;
     public static int Y_OFFSET = Graph.HEIGHT / 20;
+
+    private static ArrayList<Point> points;
 
 
     public static ArrayList<Point> getExampleLinerDataPoints()
@@ -153,6 +154,11 @@ public class Graph
     public static ArrayList<Point> getPoints()
     {
         return points;
+    }
+
+    public static void setPoints(ArrayList<Point> points)
+    {
+        Graph.points = points;
     }
 }
 

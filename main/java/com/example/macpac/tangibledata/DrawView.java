@@ -19,9 +19,9 @@ public class DrawView extends View
     public DrawView(Context context)
     {
         super(context);
-        Graph.points = Graph.resizeLinearPoints(GraphConverter.convertPoints());
 //        Graph.points = Graph.getExampleBarChartDataPoints();
-       Graph.type = GraphConverter.getGraphType();
+        Graph.setPoints(Graph.resizeLinearPoints(GraphConverter.convertPoints()));
+        Graph.type = GraphConverter.getGraphType();
     }
 
     public DrawView(Context context, AttributeSet attrs)
@@ -58,7 +58,7 @@ public class DrawView extends View
                 case Graph.BAR_CHART_MODE:
                     int singleWidth = (int) ((Graph.X_OFFSET * 17) / Graph.getPoints().size());
                     for (int i = 0; i < Graph.getPoints().size(); i++)
-                        canvas.drawRect((int) (singleWidth * (i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.points.get(i).y - Graph.Y_OFFSET * 2.05), (int) (singleWidth * (0.7 + i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.Y_OFFSET * 2.05), paint);
+                        canvas.drawRect((int) (singleWidth * (i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.getPoints().get(i).y - Graph.Y_OFFSET * 2.05), (int) (singleWidth * (0.7 + i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.Y_OFFSET * 2.05), paint);
                     break;
             }
     }
