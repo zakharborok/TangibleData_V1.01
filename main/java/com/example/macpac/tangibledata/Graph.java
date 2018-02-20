@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Point;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static java.lang.StrictMath.floor;
 
@@ -28,16 +29,10 @@ public class Graph
     {
         ArrayList<Point> examplePoints = new ArrayList<>();
 
-        /*examplePoints.add(new Point(Graph.WIDTH / 5, (Graph.HEIGHT / 5) * 4));
-        examplePoints.add(new Point((Graph.WIDTH / 5) * 2, Graph.HEIGHT / 5));
-        examplePoints.add(new Point((Graph.WIDTH / 5) * 3, Graph.HEIGHT / 5));
-        examplePoints.add(new Point((Graph.WIDTH / 5) * 4, (Graph.HEIGHT / 5) * 4));//*/
-
-        examplePoints.add(new Point(1, 1));
-        examplePoints.add(new Point(2, 2));
-        examplePoints.add(new Point(2, 4));
-        examplePoints.add(new Point(5, 1));
-
+        for (int i = 0; i < 1000; i++)
+        {
+            examplePoints.add(new Point((int) (i), (int) (Math.random() * 8192.0)));
+        }
 
         return resizeLinearPoints(examplePoints);
     }
@@ -92,27 +87,27 @@ public class Graph
                     maxY = pointsToResize.get(i).y;
             }
 
-            int yDiff = maxY - minY;
-            int xDiff = maxX - minX;
+            float yDiff = (float) (maxY - minY);
+            float xDiff = (float) (maxX - minX);
 
-            float yMultiplier = (Y_OFFSET * 16) / yDiff;
-            float xMultiplier = (X_OFFSET * 16) / xDiff;
+            float yMultiplier = (float)(Y_OFFSET * 16) / yDiff;
+            float xMultiplier = (float)(X_OFFSET * 16) / xDiff;
 
             if (minX <= 0)
-                for (Point p : pointsToResize)
-                    p.x = (int) ((float) (p.x + minX) * xMultiplier) + X_OFFSET + X_OFFSET / 2;
+                for (Point p:pointsToResize)
+                    p.x = (int) ((float)(p.x + minX) * xMultiplier) + X_OFFSET + X_OFFSET / 2;
 
             if (minX > 0)
-                for (Point p : pointsToResize)
-                    p.x = (int) ((float) (p.x - minX) * xMultiplier) + X_OFFSET + X_OFFSET / 2;
+                for (Point p:pointsToResize)
+                    p.x = (int) ((float)(p.x - minX) * xMultiplier) + X_OFFSET + X_OFFSET / 2;
 
             if (minY <= 0)
-                for (Point p : pointsToResize)
-                    p.y = HEIGHT - ((int) ((float) (p.y + minY) * yMultiplier) + Y_OFFSET * 2 + Y_OFFSET / 2);
+                for (Point p:pointsToResize)
+                    p.y = HEIGHT - ((int) ((float)(p.y + minY) * yMultiplier) + Y_OFFSET * 2 + Y_OFFSET / 2);
 
             if (minY > 0)
-                for (Point p : pointsToResize)
-                    p.y = HEIGHT - ((int) ((float) (p.y - minY) * yMultiplier) + Y_OFFSET * 2 + Y_OFFSET / 2);
+                for (Point p:pointsToResize)
+                    p.y = HEIGHT - ((int) ((float)(p.y - minY) * yMultiplier) + Y_OFFSET * 2 + Y_OFFSET / 2);
 
 
         }//
@@ -120,29 +115,30 @@ public class Graph
         return pointsToResize;//*/
     }
 
-    private static ArrayList<Point> resizeBarChartPoints(ArrayList<Point> pointsToResize)
+    public static ArrayList<Point> resizeBarChartPoints(ArrayList<Point> pointsToResize)
     {
         if (pointsToResize.size() > 0)
         {
             //find min maxes to know the boundaries
-            int maxY = pointsToResize.get(0).y, minY = pointsToResize.get(0).y;
+            int  maxY = pointsToResize.get(0).y, minY = pointsToResize.get(0).y;
 
             for (int i = 0; i < pointsToResize.size(); i++)
             {
+                ///*
                 if (minY > pointsToResize.get(i).y)
                     minY = pointsToResize.get(i).y;
 
                 if (maxY < pointsToResize.get(i).y)
                     maxY = pointsToResize.get(i).y;
+                //*/
             }
 
-            int yDiff = maxY - minY;
+            float yDiff = (float) (maxY - minY);
 
-            float yMultiplier = (Y_OFFSET * 16) / yDiff;
+            float yMultiplier = (float) (Y_OFFSET * 16) / yDiff;
 
-            for (Point p : pointsToResize)
-                p.y = (int) (p.y * yMultiplier);
-
+            for (Point p:pointsToResize)
+                p.y = (int) ((float) (p.y) * yMultiplier);
 
         }//
 
@@ -159,3 +155,7 @@ public class Graph
         return points;
     }
 }
+
+
+
+
