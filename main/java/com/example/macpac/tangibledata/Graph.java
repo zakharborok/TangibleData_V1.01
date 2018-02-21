@@ -67,18 +67,31 @@ public class Graph//:TODO get rid of static shit
     {
         ArrayList<Point> examplePoints = new ArrayList<>();
 
-        examplePoints.add(new Point(0, 10));
-        examplePoints.add(new Point(0, 20));
-        examplePoints.add(new Point(0, 30));
-        examplePoints.add(new Point(0, 40));
-        examplePoints.add(new Point(0, 50));
-        examplePoints.add(new Point(0, 60));
-        examplePoints.add(new Point(0, 70));
-        examplePoints.add(new Point(0, 70));
-        examplePoints.add(new Point(0, 70));
-        examplePoints.add(new Point(0, 70));
-        examplePoints.add(new Point(0, 50));
-        examplePoints.add(new Point(0, 90));
+        for (int i = 0; i < 6; i++)
+        {
+            int tempY = (int) (Math.random() * 8192.0);
+            examplePoints.add(new Point((int) (i), tempY));
+            while ((Math.random() * 8192.0) > 4000)
+            {
+                i++;
+                int tempY2 = tempY + ((int) (Math.random() * 1500.0) - 700);
+                if (tempY2 < 0) tempY2 = 0;
+                examplePoints.add(new Point((i), tempY2));
+            }
+        }
+
+//        examplePoints.add(new Point(0, 10));
+//        examplePoints.add(new Point(0, 20));
+//        examplePoints.add(new Point(0, 30));
+//        examplePoints.add(new Point(0, 40));
+//        examplePoints.add(new Point(0, 50));
+//        examplePoints.add(new Point(0, 60));
+//        examplePoints.add(new Point(0, 70));
+//        examplePoints.add(new Point(0, 70));
+//        examplePoints.add(new Point(0, 70));
+//        examplePoints.add(new Point(0, 70));
+//        examplePoints.add(new Point(0, 50));
+//        examplePoints.add(new Point(0, 90));
 
 
         return resizeBarChartPoints(examplePoints);

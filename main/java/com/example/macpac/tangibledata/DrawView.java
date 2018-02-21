@@ -25,11 +25,11 @@ public class DrawView extends View
         switch (Graph.instance.getType())
         {
             case Graph.LINEAR_MODE:
-                Graph.instance.setInstancePoints(Graph.instance.resizeLinearPoints(GraphConverter.convertPoints()));
+                Graph.instance.setInstancePoints(Graph.instance.resizeLinearPoints(/*GraphConverter.convertPoints()*/Graph.instance.getExampleLinerDataPoints()));
                 break;
 
             case Graph.BAR_CHART_MODE:
-                Graph.instance.setInstancePoints(Graph.instance.resizeBarChartPoints(GraphConverter.convertPoints()));
+                Graph.instance.setInstancePoints(Graph.instance.resizeBarChartPoints(/*GraphConverter.convertPoints()*/Graph.instance.getExampleBarChartDataPoints()));
                 break;
         }
     }
