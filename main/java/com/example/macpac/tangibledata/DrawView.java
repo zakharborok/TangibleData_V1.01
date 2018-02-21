@@ -19,8 +19,17 @@ public class DrawView extends View
     public DrawView(Context context)
     {
         super(context);
-        Graph.setPoints(Graph.getExampleLinerDataPoints());
-//        Graph.setPoints(Graph.resizeLinearPoints(GraphConverter.convertPoints()));
+
+        switch (GraphConverter.getGraphType())
+        {
+            case Graph.LINEAR_MODE:
+                Graph.instance = new Graph(Graph.LINEAR_MODE, Graph.instance.resizeLinearPoints(GraphConverter.convertPoints()));
+                break;
+
+            case Graph.BAR_CHART_MODE:
+                Graph.instance = new Graph(Graph.BAR_CHART_MODE, Graph.instance.resizeBarChartPoints(GraphConverter.convertPoints()));
+                break;
+        }
     }
 
     public DrawView(Context context, AttributeSet attrs)
@@ -46,18 +55,18 @@ public class DrawView extends View
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeWidth(4f);
 
-        if (Graph.getPoints().size() > 0)
-            switch (Graph.getType())
+        if (Graph.instance.getPoints().size() > 0)
+            switch (Graph.instance.getType())
             {
                 case Graph.LINEAR_MODE:
-                    for (int i = 1; i < Graph.getPoints().size(); i++)
-                        canvas.drawLine(Graph.getPoints().get(i - 1).x, Graph.getPoints().get(i - 1).y, Graph.getPoints().get(i).x, Graph.getPoints().get(i).y, paint);
+                    for (int i = 1; i < Graph.instance.getPoints().size(); i++)
+                        canvas.drawLine(Graph.instance.getPoints().get(i - 1).x, Graph.instance.getPoints().get(i - 1).y, Graph.instance.getPoints().get(i).x, Graph.instance.getPoints().get(i).y, paint);
                     break;
 
                 case Graph.BAR_CHART_MODE:
-                    int singleWidth = (int) ((Graph.X_OFFSET * 17) / Graph.getPoints().size());
-                    for (int i = 0; i < Graph.getPoints().size(); i++)
-                        canvas.drawRect((int) (singleWidth * (i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.getPoints().get(i).y - Graph.Y_OFFSET * 2.05), (int) (singleWidth * (0.7 + i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.Y_OFFSET * 2.05), paint);
+                    int singleWidth = (int) ((Graph.X_OFFSET * 17) / Graph.instance.getPoints().size());
+                    for (int i = 0; i < Graph.instance.getPoints().size(); i++)
+                        canvas.drawRect((int) (singleWidth * (i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.instance.getPoints().get(i).y - Graph.Y_OFFSET * 2.05), (int) (singleWidth * (0.7 + i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.Y_OFFSET * 2.05), paint);
                     break;
             }
     }

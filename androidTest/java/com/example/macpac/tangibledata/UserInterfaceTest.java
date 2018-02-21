@@ -20,20 +20,22 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
 
 
-
-public class UserInterfaceTest {
+public class UserInterfaceTest
+{
 
     @Rule
     public ActivityTestRule<Menu> menu = new ActivityTestRule<>(Menu.class);
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
         Intents.init();
     }
 
     @Test
-    public void testSelectListViewItem(){
+    public void testSelectListViewItem()
+    {
         //Select Sample File From ListView
         onView(withText("SampleFile.csv")).perform(longClick());
         //Check if GraphTypeView Activity has opened
@@ -41,13 +43,15 @@ public class UserInterfaceTest {
     }
 
     @Test
-    public void testSpeechListViewItem(){
+    public void testSpeechListViewItem()
+    {
         //Select Sample File From ListView
         onView(withText("SampleFile.csv")).perform(click());
     }
 
     @Test
-    public void testSelectLineGraph(){
+    public void testSelectLineGraph()
+    {
         //Select Sample File From ListView
         onView(withText("SampleFile.csv")).perform(longClick());
         //Select Line Graph mode
@@ -55,11 +59,12 @@ public class UserInterfaceTest {
         //Check if GraphView Activity has opened
         intended(hasComponent(new ComponentName(getTargetContext(), GraphView.class)));
         //Check if Graph is in Line Graph Mode
-        assertTrue(Graph.type == Graph.LINEAR_MODE);
+        assertTrue(Graph.instance.getType() == Graph.LINEAR_MODE);
     }
 
     @Test
-    public void testSpeechLineGraph(){
+    public void testSpeechLineGraph()
+    {
         //Select Sample File From ListView
         onView(withText("SampleFile.csv")).perform(longClick());
         //Select Line Graph mode
@@ -70,7 +75,8 @@ public class UserInterfaceTest {
     }
 
     @Test
-    public void testSelectBarGraph(){
+    public void testSelectBarGraph()
+    {
         //Select Sample File From ListView
         onView(withText("SampleFile.csv")).perform(longClick());
         //Select Bar Graph mode
@@ -78,12 +84,12 @@ public class UserInterfaceTest {
         //Check if GraphView Activity has opened
         intended(hasComponent(new ComponentName(getTargetContext(), GraphView.class)));
         //Check if Graph is in Bar Graph Mode
-        assertTrue(Graph.type == Graph.BAR_CHART_MODE);
-
+        assertTrue(Graph.instance.getType() == Graph.BAR_CHART_MODE);
     }
 
     @Test
-    public void testSpeechBarGraph(){
+    public void testSpeechBarGraph()
+    {
         //Select Sample File From ListView
         onView(withText("SampleFile.csv")).perform(longClick());
         //Select Bar Graph mode
@@ -94,7 +100,8 @@ public class UserInterfaceTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() throws Exception
+    {
         Intents.release();
     }
 

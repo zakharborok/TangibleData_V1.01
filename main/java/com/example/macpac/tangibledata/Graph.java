@@ -12,21 +12,27 @@ import static java.lang.StrictMath.floor;
  * Created by MacPac on 15/01/2018.
  */
 
-public class Graph
+public class Graph//:TODO get rid of static shit
 {
     public static final int LINEAR_MODE = 0,
             BAR_CHART_MODE = 1,
             WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels,
-            HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
+            HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels,
+            X_OFFSET = WIDTH / 20,
+            Y_OFFSET = Graph.HEIGHT / 20;
 
-    public static int type;
-    public static int X_OFFSET = Graph.WIDTH / 20;
-    public static int Y_OFFSET = Graph.HEIGHT / 20;
+    public static Graph instance;
 
-    private static ArrayList<Point> points;
+    private int type;
+    private ArrayList<Point> points;
 
+    public Graph(int type, ArrayList<Point> points)
+    {
+        this.type = type;
+        this.points = points;
+    }
 
-    public static ArrayList<Point> getExampleLinerDataPoints()
+    public ArrayList<Point> getExampleLinerDataPoints()
     {
         ArrayList<Point> examplePoints = new ArrayList<>();
 
@@ -46,7 +52,7 @@ public class Graph
         return resizeLinearPoints(examplePoints);
     }
 
-    public static ArrayList<Point> getExampleBarChartDataPoints()
+    public ArrayList<Point> getExampleBarChartDataPoints()
     {
         ArrayList<Point> examplePoints = new ArrayList<>();
 
@@ -67,7 +73,7 @@ public class Graph
         return resizeBarChartPoints(examplePoints);
     }
 
-    public static ArrayList<Point> resizeLinearPoints(ArrayList<Point> pointsToResize)
+    public ArrayList<Point> resizeLinearPoints(ArrayList<Point> pointsToResize)
     {
         if (pointsToResize.size() > 0)
         {
@@ -118,7 +124,7 @@ public class Graph
         return pointsToResize;//*/
     }
 
-    public static ArrayList<Point> resizeBarChartPoints(ArrayList<Point> pointsToResize)
+    public ArrayList<Point> resizeBarChartPoints(ArrayList<Point> pointsToResize)
     {
         if (pointsToResize.size() > 0)
         {
@@ -148,19 +154,19 @@ public class Graph
         return pointsToResize;//*/
     }
 
-    public static int getType()
+    public int getType()
     {
         return type;
     }
 
-    public static ArrayList<Point> getPoints()
+    public ArrayList<Point> getPoints()
     {
         return points;
     }
 
-    public static void setPoints(ArrayList<Point> points)
+    public void setPoints(ArrayList<Point> points)
     {
-        Graph.points = points;
+        Graph.instance.points = points;
     }
 }
 
