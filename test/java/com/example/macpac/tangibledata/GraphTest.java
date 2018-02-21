@@ -18,7 +18,6 @@ import static org.junit.Assert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class GraphTest
 {
-
     @Mock
     Graph graph;
 
@@ -72,5 +71,4 @@ public class GraphTest
 
         return tempList;
     }
-
 }
