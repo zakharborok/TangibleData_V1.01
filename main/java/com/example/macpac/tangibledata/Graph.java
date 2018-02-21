@@ -2,6 +2,7 @@ package com.example.macpac.tangibledata;
 
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.util.DisplayMetrics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,22 +15,32 @@ import static java.lang.StrictMath.floor;
 
 public class Graph//:TODO get rid of static shit
 {
-    public static final int LINEAR_MODE = 0,
-            BAR_CHART_MODE = 1,
-            WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels,
-            HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels,
-            X_OFFSET = WIDTH / 20,
-            Y_OFFSET = Graph.HEIGHT / 20;
-
     public static Graph instance;
+    public static final int LINEAR_MODE = 0, BAR_CHART_MODE = 1;
+
+    public final int WIDTH, HEIGHT, X_OFFSET, Y_OFFSET;
 
     private int type;
     private ArrayList<Point> points;
+
+    public Graph(int type, ArrayList<Point> points, DisplayMetrics metrics)
+    {
+        this.type = type;
+        this.points = points;
+        WIDTH = metrics.widthPixels;
+        HEIGHT = metrics.heightPixels;
+        X_OFFSET = WIDTH / 20;
+        Y_OFFSET = HEIGHT / 20;
+    }
 
     public Graph(int type, ArrayList<Point> points)
     {
         this.type = type;
         this.points = points;
+        WIDTH = getMetrics().widthPixels;
+        HEIGHT = getMetrics().heightPixels;
+        X_OFFSET = WIDTH / 20;
+        Y_OFFSET = HEIGHT / 20;
     }
 
     public ArrayList<Point> getExampleLinerDataPoints()
@@ -99,24 +110,24 @@ public class Graph//:TODO get rid of static shit
             float yDiff = (float) (maxY - minY);
             float xDiff = (float) (maxX - minX);
 
-            float yMultiplier = (float)(Y_OFFSET * 16) / yDiff;
-            float xMultiplier = (float)(X_OFFSET * 16) / xDiff;
+            float yMultiplier = (float) (Y_OFFSET * 16) / yDiff;
+            float xMultiplier = (float) (X_OFFSET * 16) / xDiff;
 
             if (minX <= 0)
-                for (Point p:pointsToResize)
-                    p.x = (int) ((float)(p.x + minX) * xMultiplier) + X_OFFSET + X_OFFSET / 2;
+                for (Point p : pointsToResize)
+                    p.x = (int) ((float) (p.x + minX) * xMultiplier) + X_OFFSET + X_OFFSET / 2;
 
             if (minX > 0)
-                for (Point p:pointsToResize)
-                    p.x = (int) ((float)(p.x - minX) * xMultiplier) + X_OFFSET + X_OFFSET / 2;
+                for (Point p : pointsToResize)
+                    p.x = (int) ((float) (p.x - minX) * xMultiplier) + X_OFFSET + X_OFFSET / 2;
 
             if (minY <= 0)
-                for (Point p:pointsToResize)
-                    p.y = HEIGHT - ((int) ((float)(p.y + minY) * yMultiplier) + Y_OFFSET * 2 + Y_OFFSET / 2);
+                for (Point p : pointsToResize)
+                    p.y = HEIGHT - ((int) ((float) (p.y + minY) * yMultiplier) + Y_OFFSET * 2 + Y_OFFSET / 2);
 
             if (minY > 0)
-                for (Point p:pointsToResize)
-                    p.y = HEIGHT - ((int) ((float)(p.y - minY) * yMultiplier) + Y_OFFSET * 2 + Y_OFFSET / 2);
+                for (Point p : pointsToResize)
+                    p.y = HEIGHT - ((int) ((float) (p.y - minY) * yMultiplier) + Y_OFFSET * 2 + Y_OFFSET / 2);
 
 
         }//
@@ -129,7 +140,7 @@ public class Graph//:TODO get rid of static shit
         if (pointsToResize.size() > 0)
         {
             //find min maxes to know the boundaries
-            int  maxY = pointsToResize.get(0).y, minY = pointsToResize.get(0).y;
+            int maxY = pointsToResize.get(0).y, minY = pointsToResize.get(0).y;
 
             for (int i = 0; i < pointsToResize.size(); i++)
             {
@@ -146,12 +157,17 @@ public class Graph//:TODO get rid of static shit
 
             float yMultiplier = (float) (Y_OFFSET * 16) / yDiff;
 
-            for (Point p:pointsToResize)
+            for (Point p : pointsToResize)
                 p.y = (int) ((float) (p.y) * yMultiplier);
 
         }//
 
         return pointsToResize;//*/
+    }
+
+    public DisplayMetrics getMetrics()
+    {
+        return Resources.getSystem().getDisplayMetrics();
     }
 
     public int getType()
@@ -165,6 +181,11 @@ public class Graph//:TODO get rid of static shit
     }
 
     public void setPoints(ArrayList<Point> points)
+    {
+        this.points = points;
+    }
+
+    public void setInstancePoints(ArrayList<Point> points)
     {
         Graph.instance.points = points;
     }

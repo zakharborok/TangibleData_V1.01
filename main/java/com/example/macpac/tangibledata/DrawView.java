@@ -20,14 +20,16 @@ public class DrawView extends View
     {
         super(context);
 
-        switch (GraphConverter.getGraphType())
+        Graph.instance = new Graph(GraphConverter.getGraphType(), null);
+
+        switch (Graph.instance.getType())
         {
             case Graph.LINEAR_MODE:
-                Graph.instance = new Graph(Graph.LINEAR_MODE, Graph.instance.resizeLinearPoints(GraphConverter.convertPoints()));
+                Graph.instance.setInstancePoints(Graph.instance.resizeLinearPoints(GraphConverter.convertPoints()));
                 break;
 
             case Graph.BAR_CHART_MODE:
-                Graph.instance = new Graph(Graph.BAR_CHART_MODE, Graph.instance.resizeBarChartPoints(GraphConverter.convertPoints()));
+                Graph.instance.setInstancePoints(Graph.instance.resizeBarChartPoints(GraphConverter.convertPoints()));
                 break;
         }
     }
@@ -64,9 +66,9 @@ public class DrawView extends View
                     break;
 
                 case Graph.BAR_CHART_MODE:
-                    int singleWidth = (int) ((Graph.X_OFFSET * 17) / Graph.instance.getPoints().size());
+                    int singleWidth = (int) ((Graph.instance.X_OFFSET * 17) / Graph.instance.getPoints().size());
                     for (int i = 0; i < Graph.instance.getPoints().size(); i++)
-                        canvas.drawRect((int) (singleWidth * (i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.instance.getPoints().get(i).y - Graph.Y_OFFSET * 2.05), (int) (singleWidth * (0.7 + i) + Graph.X_OFFSET * 1.1), (int) (Graph.HEIGHT - Graph.Y_OFFSET * 2.05), paint);
+                        canvas.drawRect((int) (singleWidth * (i) + Graph.instance.X_OFFSET * 1.1), (int) (Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y - Graph.instance.Y_OFFSET * 2.05), (int) (singleWidth * (0.7 + i) + Graph.instance.X_OFFSET * 1.1), (int) (Graph.instance.HEIGHT - Graph.instance.Y_OFFSET * 2.05), paint);
                     break;
             }
     }
@@ -76,8 +78,8 @@ public class DrawView extends View
         paint.setColor(Color.GRAY);
         paint.setStrokeWidth(6f);
 
-        canvas.drawLine(Graph.X_OFFSET, Graph.Y_OFFSET, Graph.X_OFFSET, Graph.Y_OFFSET * 18, paint);
-        canvas.drawLine(Graph.X_OFFSET, Graph.Y_OFFSET * 18, Graph.X_OFFSET * 18, Graph.Y_OFFSET * 18, paint);
+        canvas.drawLine(Graph.instance.X_OFFSET, Graph.instance.Y_OFFSET, Graph.instance.X_OFFSET, Graph.instance.Y_OFFSET * 18, paint);
+        canvas.drawLine(Graph.instance.X_OFFSET, Graph.instance.Y_OFFSET * 18, Graph.instance.X_OFFSET * 18, Graph.instance.Y_OFFSET * 18, paint);
 
         paint.setStrokeWidth(2f);
     }

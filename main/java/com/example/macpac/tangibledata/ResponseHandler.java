@@ -107,12 +107,12 @@ public class ResponseHandler
 
     private void hundleTouchRepresentation(int x, int y)
     {
-        int singleWidth = (int) ((Graph.X_OFFSET * 17) / Graph.instance.getPoints().size());
+        int singleWidth = (int) ((Graph.instance.X_OFFSET * 17) / Graph.instance.getPoints().size());
         for (int i = 0; i < Graph.instance.getPoints().size(); i++)
-            if (x > singleWidth * (i) + Graph.X_OFFSET * 1.1 && x < (singleWidth * (0.7 + i) + Graph.X_OFFSET * 1.1) && y > Graph.HEIGHT - Graph.instance.getPoints().get(i).y - Graph.Y_OFFSET * 2.05 && y < (Graph.HEIGHT - Graph.Y_OFFSET * 2.05))
+            if (x > singleWidth * (i) + Graph.instance.X_OFFSET * 1.1 && x < (singleWidth * (0.7 + i) + Graph.instance.X_OFFSET * 1.1) && y > Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y - Graph.instance.Y_OFFSET * 2.05 && y < (Graph.instance.HEIGHT - Graph.instance.Y_OFFSET * 2.05))
             {
                 singlePulseTime = 500;
-                pulseStength = calculatePulseStrenght(Graph.HEIGHT - Graph.instance.getPoints().get(i).y);
+                pulseStength = calculatePulseStrenght(Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y);
                 Log.d("ddd", pulseStength + "- is pulseStength");
                 toneGen1.startTone(pulseStength / 2, singlePulseTime);
                 shakeItBaby();
