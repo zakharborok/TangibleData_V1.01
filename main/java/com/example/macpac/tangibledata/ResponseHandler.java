@@ -13,6 +13,7 @@ import java.util.HashMap;
 import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -31,9 +32,11 @@ public class ResponseHandler
     private Activity parentActivity;
     private HashMap<Integer, Integer> map;
     private float LARGEST_Y_VAL;
-    private long timeKeeper;
-    private int singlePulseTime = 100, pulseStength = -1;
-    private ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+    private long timeKeeper, timeBetweenTouch, timeBetweenVibrations;
+    private int singlePulseTime, pulseStength, touchCounter;
+    private ToneGenerator toneGen1;
+
+    int soundCounter = 0;
 
 
     public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
@@ -41,6 +44,13 @@ public class ResponseHandler
         this.parentActivity = parentActivity;
         LARGEST_Y_VAL = findTheLargestYVal(points);
         map = new HashMap<>();
+        toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        singlePulseTime = 100;
+        pulseStength = -1;
+        touchCounter = 0;
+        timeKeeper = 0;
+        timeBetweenTouch = 0;
+        timeBetweenVibrations = 0;
 
         switch (graphType)
         {
@@ -51,8 +61,11 @@ public class ResponseHandler
             case Graph.BAR_CHART_MODE:
                 break;
         }
+    }
 
-
+    public ResponseHandler(Activity parentActivity)
+    {
+        this(parentActivity,Graph.instance.getPoints(),Graph.instance.getType());
     }
 
     public float findTheLargestYVal(ArrayList<Point> listOfPoints)
@@ -72,16 +85,22 @@ public class ResponseHandler
 
     public void handleTouch(int x, int y)
     {
-        switch (Graph.instance.getType())
+        if (System.currentTimeMillis() - timeKeeper > 100)
         {
-            case Graph.LINEAR_MODE:
-                hundleTouchNavigation(x, y);
-                break;
+            timeKeeper = System.currentTimeMillis();
+            updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
 
-            case Graph.BAR_CHART_MODE:
-                hundleTouchRepresentation(x, y);
-                break;
-        }//*/
+            switch (Graph.instance.getType())
+            {
+                case Graph.LINEAR_MODE:
+                    hundleTouchNavigation(x, y);
+                    break;
+
+                case Graph.BAR_CHART_MODE:
+                    hundleTouchRepresentation(x, y);
+                    break;
+            }//*/
+        }
     }
 
     private void hundleTouchNavigation(int x, int y)
@@ -92,33 +111,26 @@ public class ResponseHandler
 
             if (Math.abs(distanceToTheGraph) < Resources.getSystem().getDisplayMetrics().widthPixels / 10)
             {
-                calculateSinglePulse(distanceToTheGraph);
-
-                if (System.currentTimeMillis() - timeKeeper > singlePulseTime * 2)
+                if (System.currentTimeMillis() - timeBetweenVibrations > singlePulseTime * 2)
                 {
-                    timeKeeper = System.currentTimeMillis();
+                    timeBetweenVibrations = System.currentTimeMillis();
+                    calculateSinglePulse(distanceToTheGraph);
                     toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, singlePulseTime);
                     shakeItBaby();
                 }
-            } else if (System.currentTimeMillis() - timeKeeper > 2000)
+            } else
             {
-                timeKeeper = System.currentTimeMillis();
-
-                if (distanceToTheGraph > 0)
-                    Speech.Talk(parentActivity.getApplicationContext(), "Graph is above");
-                else if (distanceToTheGraph < 0)
-                    Speech.Talk(parentActivity.getApplicationContext(), "Graph is below");
+                if (distanceToTheGraph > Resources.getSystem().getDisplayMetrics().widthPixels / 5)
+                    Speech.instance.Talk(parentActivity.getApplicationContext(), "Graph is above");
+                else if (distanceToTheGraph < - Resources.getSystem().getDisplayMetrics().widthPixels / 5)
+                    Speech.instance.Talk(parentActivity.getApplicationContext(), "Graph is below");
             }
-
-        } else if (System.currentTimeMillis() - timeKeeper > 2000)
+        } else
         {
-            timeKeeper = System.currentTimeMillis();
-
             if (x < Graph.instance.X_OFFSET)
-                Speech.Talk(parentActivity.getApplicationContext(), "Start of the Graph");
+                Speech.instance.Talk(parentActivity.getApplicationContext(), "Start of the Graph");
             else if (x > Graph.instance.X_OFFSET * 18)
-                Speech.Talk(parentActivity.getApplicationContext(), "End of the Graph");
-
+                Speech.instance.Talk(parentActivity.getApplicationContext(), "End of the Graph");
         }
     }
 
@@ -128,10 +140,10 @@ public class ResponseHandler
         for (int i = 0; i < Graph.instance.getPoints().size(); i++)
             if (x > singleWidth * (i) + Graph.instance.X_OFFSET * 1.1 && x < (singleWidth * (0.7 + i) + Graph.instance.X_OFFSET * 1.1) && y > Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y - Graph.instance.Y_OFFSET * 2.05 && y < (Graph.instance.HEIGHT - Graph.instance.Y_OFFSET * 2.05))
             {
-                singlePulseTime = 500;
                 pulseStength = calculatePulseStrenght(Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y);
-//                Log.d("ddd", pulseStength + "- is pulseStength");
-                toneGen1.startTone(pulseStength / 2, singlePulseTime);
+
+                toneGen1.startTone(ToneGenerator.TONE_SUP_RINGTONE, 500);
+                
                 shakeItBaby();
             }
     }
@@ -190,6 +202,18 @@ public class ResponseHandler
         {
             ((Vibrator) parentActivity.getSystemService(VIBRATOR_SERVICE)).vibrate(singlePulseTime);
         }
+    }
+
+    private void updateTouchCounter(long diff)
+    {
+        if (400 < diff && diff < 1000)
+            touchCounter++;
+        else
+            touchCounter = 0;
+
+        Log.d("ddd", "counter is " + touchCounter);
+
+        timeBetweenTouch = System.currentTimeMillis();
     }
 
     public void setLARGEST_Y_VAL(float LARGEST_Y_VAL)

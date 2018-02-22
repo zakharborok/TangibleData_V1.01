@@ -11,28 +11,40 @@ import java.util.Locale;
 
 public class Speech
 {
-    private static TextToSpeech tts;
-    private static CharSequence SC_str;
-    private static String S_str;
+    public static Speech instance = new Speech();
+    private TextToSpeech tts;
+    private CharSequence SC_str;
+    private String S_str;
+    private long timeKeeper;
 
-    public static void Talk(Context context, String str)
+    public Speech()
     {
-        S_str = str;
-        tts = new TextToSpeech(TangibleData.getContext(), new TextToSpeech.OnInitListener()
-        {
+        timeKeeper = System.currentTimeMillis();
+    }
 
-            @Override
-            public void onInit(int status)
+    public void Talk(Context context, String str)
+    {
+        if (System.currentTimeMillis() - timeKeeper > 1500)
+        {
+            timeKeeper = System.currentTimeMillis();
+
+            S_str = str;
+            tts = new TextToSpeech(TangibleData.getContext(), new TextToSpeech.OnInitListener()
             {
-                if (status != TextToSpeech.ERROR)
+
+                @Override
+                public void onInit(int status)
                 {
-                    tts.setLanguage(Locale.UK);
-                    tts.setPitch(1.3f);
-                    tts.setSpeechRate(1f);
-                    //   tts.speak(SC_str, TextToSpeech.QUEUE_FLUSH, null,null);
-                    tts.speak(S_str, TextToSpeech.QUEUE_FLUSH, null);
+                    if (status != TextToSpeech.ERROR)
+                    {
+                        tts.setLanguage(Locale.UK);
+                        tts.setPitch(1.3f);
+                        tts.setSpeechRate(1f);
+                        //   tts.speak(SC_str, TextToSpeech.QUEUE_FLUSH, null,null);
+                        tts.speak(S_str, TextToSpeech.QUEUE_FLUSH, null);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

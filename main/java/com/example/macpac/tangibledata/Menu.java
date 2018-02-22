@@ -31,7 +31,7 @@ public class Menu extends ListActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        Speech.Talk(getApplicationContext(), "Select file");
+        Speech.instance.Talk(getApplicationContext(), "Select file");
 
         File root = new File("sdcard/CSV/");
         lv = getListView();
@@ -42,7 +42,7 @@ public class Menu extends ListActivity
     protected void onResume()
     {
         super.onResume();
-        Speech.Talk(getApplicationContext(), "Select file");
+        Speech.instance.Talk(getApplicationContext(), "Select file");
     }
 
     void ListDir(File f)
@@ -58,7 +58,7 @@ public class Menu extends ListActivity
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
                 {
-                    Speech.Talk(getApplicationContext(), fileList.get(i) + ", hold to select");
+                    Speech.instance.Talk(getApplicationContext(), fileList.get(i) + ", hold to select");
                 }
             });
             lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()

@@ -19,12 +19,12 @@ public class GraphView extends Activity
     {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Speech.Talk(getApplicationContext(), "Reading file: " + GraphConverter.path.getName() + ". Screen orientation changed to landscape");
+        Speech.instance.Talk(getApplicationContext(), "Reading file: " + GraphConverter.path.getName() + ". Screen orientation changed to landscape");
 
         drawView = new DrawView(this);
         setContentView(drawView);
 
-        responseHandler = new ResponseHandler(this, Graph.instance.getPoints(), Graph.instance.getType());
+        responseHandler = new ResponseHandler(this);
     }
 
     @Override
