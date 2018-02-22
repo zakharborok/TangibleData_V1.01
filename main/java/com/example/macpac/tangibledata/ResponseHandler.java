@@ -13,7 +13,6 @@ import java.util.HashMap;
 import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,7 @@ public class ResponseHandler
     private Activity parentActivity;
     private HashMap<Integer, Integer> map;
     private float LARGEST_Y_VAL;
-    private long startTime;
+    private long timeKeeper;
     private int singlePulseTime = 100, pulseStength = -1;
     private ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
 
@@ -95,15 +94,15 @@ public class ResponseHandler
             {
                 calculateSinglePulse(distanceToTheGraph);
 
-                if (System.currentTimeMillis() - startTime > singlePulseTime * 2)
+                if (System.currentTimeMillis() - timeKeeper > singlePulseTime * 2)
                 {
-                    startTime = System.currentTimeMillis();
+                    timeKeeper = System.currentTimeMillis();
                     toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, singlePulseTime);
                     shakeItBaby();
                 }
-            } else if (System.currentTimeMillis() - startTime > 2000)
+            } else if (System.currentTimeMillis() - timeKeeper > 2000)
             {
-                startTime = System.currentTimeMillis();
+                timeKeeper = System.currentTimeMillis();
 
                 if (distanceToTheGraph > 0)
                     Speech.Talk(parentActivity.getApplicationContext(), "Graph is above");
@@ -111,9 +110,9 @@ public class ResponseHandler
                     Speech.Talk(parentActivity.getApplicationContext(), "Graph is below");
             }
 
-        } else if (System.currentTimeMillis() - startTime > 2000)
+        } else if (System.currentTimeMillis() - timeKeeper > 2000)
         {
-            startTime = System.currentTimeMillis();
+            timeKeeper = System.currentTimeMillis();
 
             if (x < Graph.instance.X_OFFSET)
                 Speech.Talk(parentActivity.getApplicationContext(), "Start of the Graph");
@@ -131,7 +130,7 @@ public class ResponseHandler
             {
                 singlePulseTime = 500;
                 pulseStength = calculatePulseStrenght(Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y);
-                Log.d("ddd", pulseStength + "- is pulseStength");
+//                Log.d("ddd", pulseStength + "- is pulseStength");
                 toneGen1.startTone(pulseStength / 2, singlePulseTime);
                 shakeItBaby();
             }
