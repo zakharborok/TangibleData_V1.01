@@ -2,12 +2,10 @@ package com.example.macpac.tangibledata;
 
 import android.app.Activity;
 import android.graphics.Point;
-import android.util.Log;
-import org.junit.Before;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import static org.hamcrest.core.Is.is;
@@ -41,11 +39,11 @@ public class ResponseHandlerTest
         ResponseHandler responseHandler = getExampleResponseHandler(0);
 
         responseHandler.calculateSinglePulse(-1);
-        assertThat(responseHandler.getPulseStength(), is(ResponseHandler.PULSE_STRENGHT_BELOW));
+        assertThat(responseHandler.getPulseStength(), is(ResponseHandler.PULSE_STRENGTH_BELOW));
         assertThat(responseHandler.getSinglePulseTime(), is(ResponseHandler.SINGLE_PULSE_TIME_BELOW));
 
         responseHandler.calculateSinglePulse(1);
-        assertThat(responseHandler.getPulseStength(), is(ResponseHandler.PULSE_STRENGHT_ABOVE));
+        assertThat(responseHandler.getPulseStength(), is(ResponseHandler.PULSE_STRENGTH_ABOVE));
         assertThat(responseHandler.getSinglePulseTime(), is(ResponseHandler.SINGLE_PULSE_TIME_ABOVE));
     }
 

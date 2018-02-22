@@ -26,8 +26,8 @@ public class ResponseHandler
 {
     public static final int SINGLE_PULSE_TIME_ABOVE = 600;
     public static final int SINGLE_PULSE_TIME_BELOW = 200;
-    public static final int PULSE_STRENGHT_ABOVE = 250;
-    public static final int PULSE_STRENGHT_BELOW = 30;
+    public static final int PULSE_STRENGTH_ABOVE = 250;
+    public static final int PULSE_STRENGTH_BELOW = 30;
 
     private Activity parentActivity;
     private HashMap<Integer, Integer> map;
@@ -101,7 +101,25 @@ public class ResponseHandler
                     toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, singlePulseTime);
                     shakeItBaby();
                 }
+            } else if (System.currentTimeMillis() - startTime > 2000)
+            {
+                startTime = System.currentTimeMillis();
+
+                if (distanceToTheGraph > 0)
+                    Speech.Talk(parentActivity.getApplicationContext(), "Graph is above");
+                else if (distanceToTheGraph < 0)
+                    Speech.Talk(parentActivity.getApplicationContext(), "Graph is below");
             }
+
+        } else if (System.currentTimeMillis() - startTime > 2000)
+        {
+            startTime = System.currentTimeMillis();
+
+            if (x < Graph.instance.X_OFFSET)
+                Speech.Talk(parentActivity.getApplicationContext(), "Start of the Graph");
+            else if (x > Graph.instance.X_OFFSET * 18)
+                Speech.Talk(parentActivity.getApplicationContext(), "End of the Graph");
+
         }
     }
 
@@ -135,11 +153,11 @@ public class ResponseHandler
         if (distance < 0)
         {
             singlePulseTime = SINGLE_PULSE_TIME_BELOW;
-            pulseStength = PULSE_STRENGHT_BELOW;
+            pulseStength = PULSE_STRENGTH_BELOW;
         } else
         {
             singlePulseTime = SINGLE_PULSE_TIME_ABOVE;
-            pulseStength = PULSE_STRENGHT_ABOVE;
+            pulseStength = PULSE_STRENGTH_ABOVE;
         }
     }
 
@@ -204,4 +222,5 @@ public class ResponseHandler
     {
         return map;
     }
+
 }

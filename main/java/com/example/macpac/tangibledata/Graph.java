@@ -13,7 +13,7 @@ import static java.lang.StrictMath.floor;
  * Created by MacPac on 15/01/2018.
  */
 
-public class Graph//:TODO get rid of static shit
+public class Graph
 {
     public static Graph instance;
     public static final int LINEAR_MODE = 0, BAR_CHART_MODE = 1;
