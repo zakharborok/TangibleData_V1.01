@@ -36,7 +36,7 @@ public class ResponseHandler
     private int singlePulseTime, pulseStength, touchCounter;
     private GraphAnalyser graphAnalyser;
     private ToneGenerator toneGen1;
-    private mToneGenerator mtoneGenerator;
+    private SoundGraphGenerator soundGraphGenerator;
 
     public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
     {
@@ -51,7 +51,7 @@ public class ResponseHandler
         timeBetweenTouch = 0;
         timeBetweenVibrations = 0;
         graphAnalyser = new GraphAnalyser(points, graphType);
-        mtoneGenerator = new mToneGenerator();
+        soundGraphGenerator = new SoundGraphGenerator(points);
 
         switch (graphType)
         {
@@ -86,24 +86,27 @@ public class ResponseHandler
 
     public void handleTouch(int x, int y)
     {
-        mtoneGenerator.generateAndPlayTone(0.5f, 1024);
-        /*
+
         if (System.currentTimeMillis() - timeKeeper > 100)
         {
+            soundGraphGenerator.run();
             timeKeeper = System.currentTimeMillis();
             updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
-
+            /*
             switch (Graph.instance.getType())
             {
                 case Graph.LINEAR_MODE:
-                    hundleTouchNavigation(x, y);
+                    if (touchCounter == 2)
+                        graphAnalyser.speak(parentActivity.getApplicationContext());
+                    else
+                        hundleTouchNavigation(x, y);
                     break;
 
                 case Graph.BAR_CHART_MODE:
                     hundleTouchRepresentation(x, y);
                     break;
-            }
-        }//*/
+            }//*/
+        }
     }
 
     private void hundleTouchNavigation(int x, int y)
@@ -124,16 +127,16 @@ public class ResponseHandler
             } else
             {
                 if (distanceToTheGraph > Resources.getSystem().getDisplayMetrics().widthPixels / 10)
-                    Speech.instance.talk(parentActivity.getApplicationContext(), "Graph is above");
+                    Speech.instance.talk("Graph is above");
                 else if (distanceToTheGraph < -Resources.getSystem().getDisplayMetrics().widthPixels / 10)
-                    Speech.instance.talk(parentActivity.getApplicationContext(), "Graph is below");
+                    Speech.instance.talk("Graph is below");
             }
         } else
         {
             if (x < Graph.instance.X_OFFSET)
-                Speech.instance.talk(parentActivity.getApplicationContext(), "Start of the Graph");
+                Speech.instance.talk("Start of the Graph");
             else if (x > Graph.instance.X_OFFSET * 18)
-                Speech.instance.talk(parentActivity.getApplicationContext(), "End of the Graph");
+                Speech.instance.talk("End of the Graph");
         }
     }
 
@@ -212,16 +215,12 @@ public class ResponseHandler
         if (400 < diff && diff < 1000)
         {
             touchCounter++;
-            if (touchCounter == 2)
-            {
-                graphAnalyser.speak(parentActivity.getApplicationContext());
-            }
         } else
         {
             touchCounter = 0;
         }
 
-        Log.d("ddd", "counter is " + touchCounter);
+        Log.d("ddd", "touch count is " + touchCounter);
 
         timeBetweenTouch = System.currentTimeMillis();
     }

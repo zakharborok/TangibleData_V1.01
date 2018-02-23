@@ -1,6 +1,5 @@
 package com.example.macpac.tangibledata;
 
-import android.content.Context;
 import android.speech.tts.TextToSpeech;
 
 import java.util.Locale;
@@ -31,9 +30,14 @@ public class Speech
         });
     }
 
-    public void talk(Context context, String str)
+    public void talk(String str)
     {
         if (!tts.isSpeaking())
             tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    public boolean isTalking()
+    {
+        return tts.isSpeaking();
     }
 }

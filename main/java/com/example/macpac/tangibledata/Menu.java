@@ -28,7 +28,7 @@ public class Menu extends ListActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        Speech.instance.talk(getApplicationContext(), "Select file");
+        Speech.instance.talk("Select file");
         File root = new File("sdcard/CSV/");
         lv = getListView();
         ListDir(root);
@@ -38,7 +38,7 @@ public class Menu extends ListActivity
     protected void onResume()
     {
         super.onResume();
-        Speech.instance.talk(getApplicationContext(), "Select file");
+        Speech.instance.talk("Select file");
     }
 
     void ListDir(File f)
@@ -54,7 +54,7 @@ public class Menu extends ListActivity
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
                 {
-                    Speech.instance.talk(getApplicationContext(), fileList.get(i) + ", hold to select");
+                    Speech.instance.talk(fileList.get(i) + ", hold to select");
                 }
             });
             lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()

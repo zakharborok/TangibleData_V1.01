@@ -50,7 +50,7 @@ public class GraphAnalyser {
 
     public void speak(Context context){
         analysePoints();
-        Speech.instance.talk(context, description);
+        Speech.instance.talk(description);
     }
 
     private void getInfo(){

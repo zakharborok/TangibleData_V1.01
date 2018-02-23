@@ -18,7 +18,7 @@ public class GraphTypeView extends Activity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
-        Speech.instance.talk(getApplicationContext(), "Select graph type");
+        Speech.instance.talk("Select graph type");
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_select_mode);
@@ -31,7 +31,7 @@ public class GraphTypeView extends Activity
             @Override
             public void onClick(View view)
             {
-                Speech.instance.talk(getApplicationContext(), "Bar Graph, hold to select");
+                Speech.instance.talk("Bar Graph, hold to select");
             }
         });
         barGraph.setOnLongClickListener(new View.OnLongClickListener()
@@ -51,7 +51,7 @@ public class GraphTypeView extends Activity
             @Override
             public void onClick(View view)
             {
-                Speech.instance.talk(getApplicationContext(), "Line Graph, hold to select");
+                Speech.instance.talk("Line Graph, hold to select");
             }
         });
 
@@ -72,7 +72,7 @@ public class GraphTypeView extends Activity
     protected void onResume()
     {
         super.onResume();
-        Speech.instance.talk(getApplicationContext(), "Select graph type");
+        Speech.instance.talk("Select graph type");
     }
 
 
