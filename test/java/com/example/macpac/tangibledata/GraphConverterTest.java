@@ -41,7 +41,6 @@ public class GraphConverterTest
         pointsFromFile.add(new String[]{"x", "y"});
         pointsFromFile.add(new String[]{"1", "2"});
         pointsFromFile.add(new String[]{"1", "2"});
-
     }
 
 }
