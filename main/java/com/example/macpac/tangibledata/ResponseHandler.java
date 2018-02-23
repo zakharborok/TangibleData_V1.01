@@ -36,6 +36,7 @@ public class ResponseHandler
     private int singlePulseTime, pulseStength, touchCounter;
     private GraphAnalyser graphAnalyser;
     private ToneGenerator toneGen1;
+    private mToneGenerator mtoneGenerator;
 
     public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
     {
@@ -50,6 +51,7 @@ public class ResponseHandler
         timeBetweenTouch = 0;
         timeBetweenVibrations = 0;
         graphAnalyser = new GraphAnalyser(points, graphType);
+        mtoneGenerator = new mToneGenerator();
 
         switch (graphType)
         {
@@ -84,6 +86,8 @@ public class ResponseHandler
 
     public void handleTouch(int x, int y)
     {
+        mtoneGenerator.generateAndPlayTone(0.5f, 1024);
+        /*
         if (System.currentTimeMillis() - timeKeeper > 100)
         {
             timeKeeper = System.currentTimeMillis();
@@ -98,8 +102,8 @@ public class ResponseHandler
                 case Graph.BAR_CHART_MODE:
                     hundleTouchRepresentation(x, y);
                     break;
-            }//*/
-        }
+            }
+        }//*/
     }
 
     private void hundleTouchNavigation(int x, int y)
