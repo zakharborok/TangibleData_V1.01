@@ -3,10 +3,6 @@ package com.example.macpac.tangibledata;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +14,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Menu extends ListActivity
 {
@@ -33,7 +28,7 @@ public class Menu extends ListActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        Speech.instance.Talk(getApplicationContext(), "Select file");
+        Speech.instance.talk(getApplicationContext(), "Select file");
         File root = new File("sdcard/CSV/");
         lv = getListView();
         ListDir(root);
@@ -43,7 +38,7 @@ public class Menu extends ListActivity
     protected void onResume()
     {
         super.onResume();
-        Speech.instance.Talk(getApplicationContext(), "Select file");
+        Speech.instance.talk(getApplicationContext(), "Select file");
     }
 
     void ListDir(File f)
@@ -59,7 +54,7 @@ public class Menu extends ListActivity
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
                 {
-                    Speech.instance.Talk(getApplicationContext(), fileList.get(i) + ", hold to select");
+                    Speech.instance.talk(getApplicationContext(), fileList.get(i) + ", hold to select");
                 }
             });
             lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()

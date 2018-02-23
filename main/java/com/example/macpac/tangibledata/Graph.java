@@ -35,12 +35,7 @@ public class Graph
 
     public Graph(int type, ArrayList<Point> points)
     {
-        this.type = type;
-        this.points = points;
-        WIDTH = getMetrics().widthPixels;
-        HEIGHT = getMetrics().heightPixels;
-        X_OFFSET = WIDTH / 20;
-        Y_OFFSET = HEIGHT / 20;
+        this(type, points, Resources.getSystem().getDisplayMetrics());
     }
 
     public ArrayList<Point> getExampleLinerDataPoints()

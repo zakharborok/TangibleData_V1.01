@@ -22,7 +22,7 @@ public class GraphView extends Activity
     {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Speech.instance.Talk(getApplicationContext(), "Reading file: " + GraphConverter.path.getName() + ". Screen orientation changed to landscape");
+        Speech.instance.talk(getApplicationContext(), "Reading file: " + GraphConverter.path.getName() + ". Screen orientation changed to landscape");
         gestureDetector = (new GestureDetector(this, new GestureListener(this)));
 
         drawView = new DrawView(this);

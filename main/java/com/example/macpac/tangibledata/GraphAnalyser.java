@@ -31,6 +31,8 @@ public class GraphAnalyser {
 
     private void analysePoints(){
         getInfo();
+        //:TODO Round Values
+        //:TODO add stopper
         int len = points.size()-1;
         if (graphType == Graph.LINEAR_MODE) {
             description += "This is a Line Graph, ";
@@ -48,13 +50,14 @@ public class GraphAnalyser {
 
     public void speak(Context context){
         analysePoints();
-        Speech.instance.Talk(context, description);
+        Speech.instance.talk(context, description);
     }
 
     private void getInfo(){
         Point maxY = new Point(points.get(0).x, points.get(0).y);
         Point minY = new Point(points.get(0).x, points.get(0).y);
 
+        //:TODO save corresponding Xs to maxs
         for (int i = 0; i < points.size(); i++)
         {
             if (minY.y > points.get(i).y) {

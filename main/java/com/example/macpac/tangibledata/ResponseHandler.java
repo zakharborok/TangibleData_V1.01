@@ -37,9 +37,6 @@ public class ResponseHandler
     private GraphAnalyser graphAnalyser;
     private ToneGenerator toneGen1;
 
-    int soundCounter = 0;
-
-
     public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
     {
         this.parentActivity = parentActivity;
@@ -52,7 +49,7 @@ public class ResponseHandler
         timeKeeper = 0;
         timeBetweenTouch = 0;
         timeBetweenVibrations = 0;
-        graphAnalyser = new GraphAnalyser(points,graphType);
+        graphAnalyser = new GraphAnalyser(points, graphType);
 
         switch (graphType)
         {
@@ -67,7 +64,7 @@ public class ResponseHandler
 
     public ResponseHandler(Activity parentActivity)
     {
-        this(parentActivity,Graph.instance.getPoints(),Graph.instance.getType());
+        this(parentActivity, Graph.instance.getPoints(), Graph.instance.getType());
     }
 
     public float findTheLargestYVal(ArrayList<Point> listOfPoints)
@@ -122,23 +119,23 @@ public class ResponseHandler
                 }
             } else
             {
-                if (distanceToTheGraph > Resources.getSystem().getDisplayMetrics().widthPixels / 5)
-                    Speech.instance.Talk(parentActivity.getApplicationContext(), "Graph is above");
-                else if (distanceToTheGraph < - Resources.getSystem().getDisplayMetrics().widthPixels / 5)
-                    Speech.instance.Talk(parentActivity.getApplicationContext(), "Graph is below");
+                if (distanceToTheGraph > Resources.getSystem().getDisplayMetrics().widthPixels / 10)
+                    Speech.instance.talk(parentActivity.getApplicationContext(), "Graph is above");
+                else if (distanceToTheGraph < -Resources.getSystem().getDisplayMetrics().widthPixels / 10)
+                    Speech.instance.talk(parentActivity.getApplicationContext(), "Graph is below");
             }
         } else
         {
             if (x < Graph.instance.X_OFFSET)
-                Speech.instance.Talk(parentActivity.getApplicationContext(), "Start of the Graph");
+                Speech.instance.talk(parentActivity.getApplicationContext(), "Start of the Graph");
             else if (x > Graph.instance.X_OFFSET * 18)
-                Speech.instance.Talk(parentActivity.getApplicationContext(), "End of the Graph");
+                Speech.instance.talk(parentActivity.getApplicationContext(), "End of the Graph");
         }
     }
 
     private void hundleTouchRepresentation(int x, int y)
     {
-        int singleWidth = (int) ((float)(Graph.instance.X_OFFSET * 17) / (float)Graph.instance.getPoints().size());
+        int singleWidth = (int) ((float) (Graph.instance.X_OFFSET * 17) / (float) Graph.instance.getPoints().size());
         for (int i = 0; i < Graph.instance.getPoints().size(); i++)
             if (x > singleWidth * (i) + Graph.instance.X_OFFSET * 1.1 && x < (singleWidth * (0.7 + i) + Graph.instance.X_OFFSET * 1.1) && y > Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y - Graph.instance.Y_OFFSET * 2.05 && y < (Graph.instance.HEIGHT - Graph.instance.Y_OFFSET * 2.05))
             {
@@ -208,12 +205,15 @@ public class ResponseHandler
 
     private void updateTouchCounter(long diff)
     {
-        if (400 < diff && diff < 1000) {
+        if (400 < diff && diff < 1000)
+        {
             touchCounter++;
-            if (touchCounter == 2){
+            if (touchCounter == 2)
+            {
                 graphAnalyser.speak(parentActivity.getApplicationContext());
             }
-        } else {
+        } else
+        {
             touchCounter = 0;
         }
 
