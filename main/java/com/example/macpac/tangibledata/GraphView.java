@@ -1,6 +1,7 @@
 package com.example.macpac.tangibledata;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -25,6 +26,10 @@ public class GraphView extends Activity
         gestureDetector = (new GestureDetector(this, new GestureListener(this)));
 
         drawView = new DrawView(this);
+        if(Graph.instance.getType() == Graph.LINEAR_MODE)
+            drawView.setBackgroundColor(Color.rgb(34, 49, 63));
+        else
+            drawView.setBackgroundColor(Color.rgb(30, 139, 195));
         setContentView(drawView);
 
         responseHandler = new ResponseHandler(this);
