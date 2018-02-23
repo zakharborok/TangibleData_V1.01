@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -24,6 +26,7 @@ public class GraphTypeView extends Activity
         setContentView(R.layout.activity_select_mode);
         final Button barGraph = (Button) findViewById(R.id.buttonBarGraph);
         final Button lineGraph = (Button) findViewById(R.id.buttonLineGraph);
+
 
         barGraph.setOnClickListener(new View.OnClickListener()
         {
@@ -73,4 +76,6 @@ public class GraphTypeView extends Activity
         super.onResume();
         Speech.instance.Talk(getApplicationContext(), "Select graph type");
     }
+
+
 }

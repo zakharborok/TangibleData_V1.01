@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,7 +34,6 @@ public class Menu extends ListActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         Speech.instance.Talk(getApplicationContext(), "Select file");
-
         File root = new File("sdcard/CSV/");
         lv = getListView();
         ListDir(root);
@@ -96,5 +97,4 @@ public class Menu extends ListActivity
         Intent i = new Intent(Menu.this, GraphTypeView.class);
         startActivity(i);
     }
-
 }
