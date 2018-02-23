@@ -34,6 +34,7 @@ public class ResponseHandler
     private float LARGEST_Y_VAL;
     private long timeKeeper, timeBetweenTouch, timeBetweenVibrations;
     private int singlePulseTime, pulseStength, touchCounter;
+    private GraphAnalyser graphAnalyser;
     private ToneGenerator toneGen1;
 
     int soundCounter = 0;
@@ -51,6 +52,7 @@ public class ResponseHandler
         timeKeeper = 0;
         timeBetweenTouch = 0;
         timeBetweenVibrations = 0;
+        graphAnalyser = new GraphAnalyser(points,graphType);
 
         switch (graphType)
         {
@@ -206,10 +208,14 @@ public class ResponseHandler
 
     private void updateTouchCounter(long diff)
     {
-        if (400 < diff && diff < 1000)
+        if (400 < diff && diff < 1000) {
             touchCounter++;
-        else
+            if (touchCounter == 2){
+                graphAnalyser.speak(parentActivity.getApplicationContext());
+            }
+        } else {
             touchCounter = 0;
+        }
 
         Log.d("ddd", "counter is " + touchCounter);
 

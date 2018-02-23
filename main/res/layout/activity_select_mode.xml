@@ -12,10 +12,10 @@
             android:id="@+id/buttonLineGraph"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#192832"
+            android:background="#2C3E50"
             android:textColor="#ECECEC"
             android:textSize="30dp"
-            android:text="Line Graph"/>
+            android:text="LINE GRAPH"/>
     </LinearLayout>
 
     <LinearLayout android:layout_width="fill_parent"
@@ -26,10 +26,10 @@
             android:id="@+id/buttonBarGraph"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#193222"
+            android:background="#1E8BC3"
             android:textColor="#ECECEC"
             android:textSize="30dp"
-            android:text="Bar Graph"/>
+            android:text="BAR GRAPH"/>
 
 
     </LinearLayout>
