@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by MacPac on 23/02/2018.
  */
 
-public class SoundGraphGenerator extends Thread
+public class SoundGraphGenerator
 {
     private final float OVERALL_DURATION = 5;
     private final int minFreq = 256, maxFreq = 2048;
@@ -20,7 +20,6 @@ public class SoundGraphGenerator extends Thread
 
     public SoundGraphGenerator(ArrayList<Point> points)
     {
-        super("MyThread");
         toneGenerator = new mToneGenerator();
         frequenciesToPlay = new ArrayList<>();
         transformYValuesIntoFreq(points);
@@ -31,12 +30,19 @@ public class SoundGraphGenerator extends Thread
     {
         float playingTimeSingleTone = OVERALL_DURATION / frequenciesToPlay.size();
 
-        for (int i = 0; i < frequenciesToPlay.size(); i++)
+      for (int i = 0; i < frequenciesToPlay.size(); i++)
         {
-            toneGenerator.generateAndPlayTone(playingTimeSingleTone, frequenciesToPlay.get(counter));
-            Log.d("ddd", frequenciesToPlay.get(counter)+"\t- frequency\n"+counter+"\t- num of point");
-            counter++;
-            if (counter == frequenciesToPlay.size() - 1) counter = 0;
+            //try
+            {
+                toneGenerator.generateAndPlayTone(playingTimeSingleTone, frequenciesToPlay.get(counter));
+                Log.d("ddd", frequenciesToPlay.get(counter)+"\t- frequency\n"+i+"\t- num of point");
+                counter++;
+                if (counter == frequenciesToPlay.size() - 1) counter = 0;
+                   // wait((int)(playingTimeSingleTone * 2000));
+            }/* catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }//*/
         }
     }
 
@@ -60,6 +66,6 @@ public class SoundGraphGenerator extends Thread
 
             for (Point p:points)
                 frequenciesToPlay.add(maxFreq - (int) ((float) p.y * muliplier));
-        }
+        }87
     }
 }

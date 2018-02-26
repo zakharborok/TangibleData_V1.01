@@ -63,7 +63,14 @@ public class mToneGenerator
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, globalSnd.length,
                 AudioTrack.MODE_STATIC);
-        audioTrack.write(globalSnd, 0, globalSnd.length);
-        audioTrack.play();
+
+        try{
+            audioTrack.write(globalSnd, 0, globalSnd.length);
+            audioTrack.play();
+            audioTrack.release();
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
+
     }
 }

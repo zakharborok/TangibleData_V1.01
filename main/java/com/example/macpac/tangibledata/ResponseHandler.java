@@ -86,13 +86,12 @@ public class ResponseHandler
 
     public void handleTouch(int x, int y)
     {
-
         if (System.currentTimeMillis() - timeKeeper > 100)
         {
             soundGraphGenerator.run();
-            timeKeeper = System.currentTimeMillis();
+            timeKeeper = System.currentTimeMillis();/*
             updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
-            /*
+
             switch (Graph.instance.getType())
             {
                 case Graph.LINEAR_MODE:
