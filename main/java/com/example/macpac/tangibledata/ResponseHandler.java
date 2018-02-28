@@ -89,7 +89,7 @@ public class ResponseHandler
 
         if (System.currentTimeMillis() - timeKeeper > 100)
         {
-            soundGraphGenerator.run();
+//            soundGraphGenerator.run();
             timeKeeper = System.currentTimeMillis();
             updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
             /*
