@@ -92,7 +92,6 @@ public class ResponseHandler
 //            soundGraphGenerator.run();
             timeKeeper = System.currentTimeMillis();
             updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
-            /*
             switch (Graph.instance.getType())
             {
                 case Graph.LINEAR_MODE:
@@ -105,7 +104,7 @@ public class ResponseHandler
                 case Graph.BAR_CHART_MODE:
                     hundleTouchRepresentation(x, y);
                     break;
-            }//*/
+            }
         }
     }
 
