@@ -35,7 +35,7 @@ public class SoundGraphGenerator
             //try
             {
                 toneGenerator.generateAndPlayTone(playingTimeSingleTone, frequenciesToPlay.get(counter));
-                Log.d("ddd", frequenciesToPlay.get(counter)+"\t- frequency\n"+i+"\t- num of point");
+                Log.d("ddd", frequenciesToPlay.get(counter)+"\t- frequency\n"+counter+"\t- num of point");
                 counter++;
                 if (counter == frequenciesToPlay.size() - 1) counter = 0;
                    // wait((int)(playingTimeSingleTone * 2000));

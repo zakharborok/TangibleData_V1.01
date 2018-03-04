@@ -1,6 +1,7 @@
 package com.example.macpac.tangibledata;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -51,8 +52,13 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener {
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY){
             Toast.makeText(context, "GO Back", Toast.LENGTH_SHORT).show();
+            startActivity();
             return true;
         }
         return false;
+    }
+
+    public void startActivity() {
+        context.startActivity(new Intent(context, Menu.class));
     }
 }

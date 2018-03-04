@@ -1,8 +1,14 @@
 package com.example.macpac.tangibledata;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +27,7 @@ public class Menu extends ListActivity
     private ArrayList<String> fileList = new ArrayList<String>();
     private GraphFileManager graphFileManager = new GraphFileManager();
     private ListView lv;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
 
     @Override
@@ -43,6 +50,11 @@ public class Menu extends ListActivity
 
     void ListDir(File f)
     {
+        int permission = PermissionChecker.checkSelfPermission(getApplicationContext(),"android.permission.READ_EXTERNAL_STORAGE");
+
+        if (permission != PermissionChecker.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Menu.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
         fileList.clear();
         fileList = (ArrayList<String>) graphFileManager.getPath(f);
         if (fileList.size() != 0)
@@ -91,5 +103,22 @@ public class Menu extends ListActivity
 
         Intent i = new Intent(Menu.this, GraphTypeView.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ListDir(new File("sdcard/CSV/"));
+
+                } else {
+                    Toast.makeText(Menu.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
     }
 }
