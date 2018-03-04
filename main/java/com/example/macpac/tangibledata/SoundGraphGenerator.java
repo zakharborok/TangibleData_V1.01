@@ -30,7 +30,7 @@ public class SoundGraphGenerator
     {
         float playingTimeSingleTone = OVERALL_DURATION / frequenciesToPlay.size();
 
-      for (int i = 0; i < frequenciesToPlay.size(); i++)
+        //for (int i = 0; i < frequenciesToPlay.size(); i++)
         {
             //try
             {
@@ -66,6 +66,6 @@ public class SoundGraphGenerator
 
             for (Point p:points)
                 frequenciesToPlay.add(maxFreq - (int) ((float) p.y * muliplier));
-        }87
+        }
     }
 }
