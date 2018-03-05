@@ -22,11 +22,7 @@ public class Speech
             {
                 if (status != TextToSpeech.ERROR)
                 {
-<<<<<<< HEAD
                     tts.setLanguage(Locale.UK);
-=======
-                    tts.setLanguage(Locale.ENGLISH);
->>>>>>> 4de5c96aaa492f0e035238e78032926191e8fdcc
                     tts.setPitch(1.3f);
                     tts.setSpeechRate(1f);
                 }

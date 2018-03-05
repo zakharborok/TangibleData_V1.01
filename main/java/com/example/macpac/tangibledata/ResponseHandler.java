@@ -37,6 +37,7 @@ public class ResponseHandler
     private GraphAnalyser graphAnalyser;
     private ToneGenerator toneGen1;
     private SoundGraphGenerator soundGraphGenerator;
+    //private mToneGenerator toneGenerator = new mToneGenerator();
 
     public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
     {
@@ -86,7 +87,7 @@ public class ResponseHandler
 
     public void handleTouch(int x, int y)
     {
-        if (System.currentTimeMillis() - timeKeeper > 1000)
+        if (System.currentTimeMillis() - timeKeeper > 500)
         {
             soundGraphGenerator.run();
             timeKeeper = System.currentTimeMillis();

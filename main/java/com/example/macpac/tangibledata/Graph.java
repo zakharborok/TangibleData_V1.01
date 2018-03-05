@@ -42,7 +42,7 @@ public class Graph
     {
         ArrayList<Point> examplePoints = new ArrayList<>();
 
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i < 10; i++)
         {
             int tempY = (int) (Math.random() * 8192.0);
             examplePoints.add(new Point((int) (i), tempY));

@@ -5,72 +5,81 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Handler;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by MacPac on 23/02/2018.
  */
 
 public class mToneGenerator
 {
+    private final int duration = 1; // seconds
     private final int sampleRate = 8000;
-    private Handler handler = new Handler();
-    private byte[] globalSnd;
+    private final int numSamples = duration * sampleRate;
+    private final double sample[] = new double[numSamples];
+    private final byte generatedSnd[] = new byte[2 * numSamples];
+    private AudioTrack audioTrack;
+    Handler handler = new Handler();
 
-    public void generateAndPlayTone(final float duration, final int freqOfTone/*256-2048*/)
+    public Thread generateAndPlayTone(final int freqOfTone/*256-2048*/)
     {
         final Thread thread = new Thread(new Runnable()
         {
             public void run()
             {
-                genTone(duration, freqOfTone);
+                genTone(freqOfTone);
                 handler.post(new Runnable()
                 {
                     public void run()
                     {
-                        playSound();
+                            playSound();
+                        try
+                        {
+                            sleep(1000);
+                        } catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        releaseSound();
                     }
                 });
             }
         });
-        thread.start();
+
+        return thread;
     }
 
-    private void genTone(float duration, double freqOfTone/*440*/)
-    {
-        int numSamples = (int) (duration * (float) sampleRate);
-        double sample[] = new double[numSamples];
-        byte generatedSnd[] = new byte[2 * numSamples];
-        globalSnd = generatedSnd;
 
+    private void genTone(double freqOfTone/*440*/)
+    {
         // fill out the array
         for (int i = 0; i < numSamples; ++i)
+        {
             sample[i] = Math.sin(2 * Math.PI * i / (sampleRate / freqOfTone));
+        }
 
         // convert to 16 bit pcm sound array
+        // assumes the sample buffer is normalised.
         int idx = 0;
         for (final double dVal : sample)
         {
-            // scale to quater of maximum amplitude
-            final short val = (short) ((dVal * (32767 / 4)));
+            // scale to maximum amplitude
+            final short val = (short) ((dVal * 32767));
             // in 16 bit wav PCM, first byte is the low order byte
             generatedSnd[idx++] = (byte) (val & 0x00ff);
             generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
         }
     }
 
-    private void playSound()
-    {
-        final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
+    private void playSound() {
+        audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT, globalSnd.length,
+                AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
                 AudioTrack.MODE_STATIC);
-
-        try{
-            audioTrack.write(globalSnd, 0, globalSnd.length);
-            audioTrack.play();
-            audioTrack.release();
-        }catch (IllegalStateException e){
-            e.printStackTrace();
-        }
-
+        audioTrack.write(generatedSnd, 0, generatedSnd.length);
+        audioTrack.play();
+    }
+    public void releaseSound(){
+        audioTrack.release();
     }
 }
