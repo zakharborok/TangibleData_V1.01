@@ -16,9 +16,8 @@ public class TouchFunctionController extends Thread
     {
         super("Give me touches");
         this.responseHandler = responseHandler;
-        graphAnalyser = new GraphAnalyser(Graph.instance.getPoints(),Graph.instance.getType());
+        graphAnalyser = new GraphAnalyser(Graph.instance.getPoints(), Graph.instance.getType());
         soundGraphGenerator = new SoundGraphGenerator(Graph.instance.getPoints());
-        if (instanse != null) return instanse;
     }
 
     @Override
@@ -38,7 +37,8 @@ public class TouchFunctionController extends Thread
                 graphAnalyser.speak(responseHandler.getContext());
                 break;
             case 3:
-                soundGraphGenerator.run();
+                if (!Speech.instance.isTalking())
+                    soundGraphGenerator.run();
                 break;
 
         }

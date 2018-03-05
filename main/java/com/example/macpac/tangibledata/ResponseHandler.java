@@ -50,6 +50,7 @@ public class ResponseHandler
         timeKeeper = 0;
         timeBetweenTouch = 0;
         timeBetweenVibrations = 0;
+        TouchFunctionController.instanse = new TouchFunctionController(this);
 
         switch (graphType)
         {
@@ -84,7 +85,7 @@ public class ResponseHandler
 
     public void handleTouch(int x, int y)
     {
-        if (System.currentTimeMillis() - timeKeeper > 100)
+        if (System.currentTimeMillis() - timeKeeper > 200)
         {
             timeKeeper = System.currentTimeMillis();
             updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
@@ -94,8 +95,11 @@ public class ResponseHandler
                 case Graph.LINEAR_MODE:
                     if (touchCounter == 2)
                     {
-                        TouchFunctionController.instanse = new TouchFunctionController(this);
-                        TouchFunctionController.instanse.start();
+                        if (!TouchFunctionController.instanse.isAlive())
+                        {
+                            TouchFunctionController.instanse = new TouchFunctionController(this);
+                            TouchFunctionController.instanse.start();
+                        }
                     }
                     else
                         hundleTouchNavigation(x, y);
