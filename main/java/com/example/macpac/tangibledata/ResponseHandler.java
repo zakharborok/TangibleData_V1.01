@@ -1,6 +1,7 @@
 package com.example.macpac.tangibledata;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -34,9 +35,7 @@ public class ResponseHandler
     private float LARGEST_Y_VAL;
     private long timeKeeper, timeBetweenTouch, timeBetweenVibrations;
     private int singlePulseTime, pulseStength, touchCounter;
-    private GraphAnalyser graphAnalyser;
     private ToneGenerator toneGen1;
-    private SoundGraphGenerator soundGraphGenerator;
     //private mToneGenerator toneGenerator = new mToneGenerator();
 
     public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
@@ -51,8 +50,6 @@ public class ResponseHandler
         timeKeeper = 0;
         timeBetweenTouch = 0;
         timeBetweenVibrations = 0;
-        graphAnalyser = new GraphAnalyser(points, graphType);
-        soundGraphGenerator = new SoundGraphGenerator(points);
 
         switch (graphType)
         {
@@ -87,17 +84,19 @@ public class ResponseHandler
 
     public void handleTouch(int x, int y)
     {
-        if (System.currentTimeMillis() - timeKeeper > 500)
+        if (System.currentTimeMillis() - timeKeeper > 100)
         {
-            soundGraphGenerator.run();
             timeKeeper = System.currentTimeMillis();
-            updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);/*
+            updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
 
             switch (Graph.instance.getType())
             {
                 case Graph.LINEAR_MODE:
                     if (touchCounter == 2)
-                        graphAnalyser.speak(parentActivity.getApplicationContext());
+                    {
+                        TouchFunctionController.instanse = new TouchFunctionController(this);
+                        TouchFunctionController.instanse.start();
+                    }
                     else
                         hundleTouchNavigation(x, y);
                     break;
@@ -105,7 +104,7 @@ public class ResponseHandler
                 case Graph.BAR_CHART_MODE:
                     hundleTouchRepresentation(x, y);
                     break;
-            }//*/
+            }
         }
     }
 
@@ -255,4 +254,12 @@ public class ResponseHandler
         return map;
     }
 
+    public int getTouchCounter()
+    {
+        return touchCounter;
+    }
+
+    public Context getContext(){
+        return parentActivity.getApplicationContext();
+    }
 }

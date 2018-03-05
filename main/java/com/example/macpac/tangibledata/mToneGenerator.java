@@ -4,6 +4,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Handler;
+import android.os.Looper;
 
 import static java.lang.Thread.sleep;
 
@@ -13,15 +14,16 @@ import static java.lang.Thread.sleep;
 
 public class mToneGenerator
 {
+
     private final int duration = 1; // seconds
     private final int sampleRate = 8000;
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
     private final byte generatedSnd[] = new byte[2 * numSamples];
     private AudioTrack audioTrack;
-    Handler handler = new Handler();
+    Handler handler = new Handler(Looper.getMainLooper());
 
-    public Thread generateAndPlayTone(final int freqOfTone/*256-2048*/)
+    public Thread generateAndPlayTone(final int freqOfTone)
     {
         final Thread thread = new Thread(new Runnable()
         {
@@ -50,7 +52,7 @@ public class mToneGenerator
     }
 
 
-    private void genTone(double freqOfTone/*440*/)
+    private void genTone(double freqOfTone)
     {
         // fill out the array
         for (int i = 0; i < numSamples; ++i)

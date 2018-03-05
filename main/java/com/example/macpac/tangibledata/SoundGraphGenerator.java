@@ -1,7 +1,6 @@
 package com.example.macpac.tangibledata;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -9,18 +8,15 @@ import java.util.ArrayList;
  * Created by MacPac on 23/02/2018.
  */
 
-public class SoundGraphGenerator extends Thread
+public class SoundGraphGenerator
 {
     private final int minFreq = 256, maxFreq = 2048;
     private ArrayList<Integer> frequenciesToPlay;
-    private int counter;
 
     public SoundGraphGenerator(ArrayList<Point> points)
     {
-        super("Sound Graph Generation Thread");
         frequenciesToPlay = new ArrayList<>();
         transformYValuesIntoFreq(points);
-        counter = 0;
     }
 
     public void run()
