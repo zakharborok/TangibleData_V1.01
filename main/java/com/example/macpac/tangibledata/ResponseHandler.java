@@ -36,7 +36,7 @@ public class ResponseHandler
     private long timeKeeper, timeBetweenTouch, timeBetweenVibrations;
     private int singlePulseTime, pulseStength, touchCounter;
     private ToneGenerator toneGen1;
-    //private mToneGenerator toneGenerator = new mToneGenerator();
+    private mToneGenerator toneGenerator = new mToneGenerator();
 
     public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
     {
@@ -151,7 +151,7 @@ public class ResponseHandler
             {
                 pulseStength = calculatePulseStrenght(Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y);
 
-                toneGen1.startTone(ToneGenerator.TONE_SUP_RINGTONE, (int) (((float) pulseStength / (255.0f)) * 1000.0f));
+                toneGenerator.generateAndPlayTone((int) (1 - ((double) pulseStength / (255.0)) * (2048.0-256.0)) + 256).start();
 
                 shakeItBaby();
             }
