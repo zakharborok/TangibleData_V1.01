@@ -150,9 +150,7 @@ public class ResponseHandler
             if (x > singleWidth * (i) + Graph.instance.X_OFFSET * 1.1 && x < (singleWidth * (0.7 + i) + Graph.instance.X_OFFSET * 1.1) && y > Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y - Graph.instance.Y_OFFSET * 2.05 && y < (Graph.instance.HEIGHT - Graph.instance.Y_OFFSET * 2.05))
             {
                 pulseStength = calculatePulseStrenght(Graph.instance.HEIGHT - Graph.instance.getPoints().get(i).y);
-
-                toneGenerator.generateAndPlayTone((int) (1 - ((double) pulseStength / (255.0)) * (2048.0-256.0)) + 256).start();
-
+                toneGenerator.generateAndPlayTone((int) (((double) (255 - pulseStength) / (255.0)) * (2048.0-256.0)) + 256, 1000).start();
                 shakeItBaby();
             }
     }

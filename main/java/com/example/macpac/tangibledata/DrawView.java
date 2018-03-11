@@ -21,6 +21,7 @@ public class DrawView extends View
         super(context);
 
         Graph.instance = new Graph(GraphConverter.getGraphType(), null);
+        Graph.instance.setOriginalPoints(Graph.instance.getExampleLinerDataPoints());
 
         switch (Graph.instance.getType())
         {

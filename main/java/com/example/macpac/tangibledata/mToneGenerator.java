@@ -15,16 +15,19 @@ import static java.lang.Thread.sleep;
 public class mToneGenerator
 {
 
-    private final int duration = 1; // seconds
     private final int sampleRate = 8000;
-    private final int numSamples = duration * sampleRate;
-    private final double sample[] = new double[numSamples];
-    private final byte generatedSnd[] = new byte[2 * numSamples];
+    private int numSamples;
+    private double sample[];
+    private byte generatedSnd[];
     private AudioTrack audioTrack;
     Handler handler = new Handler(Looper.getMainLooper());
 
-    public Thread generateAndPlayTone(final int freqOfTone)
+    public Thread generateAndPlayTone(final int freqOfTone, float durationInMilliSec)
     {
+        numSamples = (int) (durationInMilliSec * sampleRate) / 1000;
+        sample = new double[numSamples];
+        generatedSnd = new byte[2 * numSamples];
+
         final Thread thread = new Thread(new Runnable()
         {
             public void run()

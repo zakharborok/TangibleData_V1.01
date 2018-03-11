@@ -17,11 +17,11 @@ public class Graph
 {
     public static Graph instance;
     public static final int LINEAR_MODE = 0, BAR_CHART_MODE = 1;
-
     public final int WIDTH, HEIGHT, X_OFFSET, Y_OFFSET;
 
     private int type;
     private ArrayList<Point> points;
+    private ArrayList<Point> originalPoints;
 
     public Graph(int type, ArrayList<Point> points, DisplayMetrics metrics)
     {
@@ -45,13 +45,13 @@ public class Graph
         for (int i = 0; i < 10; i++)
         {
             int tempY = (int) (Math.random() * 8192.0);
-            examplePoints.add(new Point((int) (i), tempY));
+            examplePoints.add(new Point((int) (i*i*i), tempY));
             while ((Math.random() * 8192.0) > 2500)
             {
                 i++;
                 int tempY2 = tempY + ((int) (Math.random() * 1500.0) - 700);
                 if (tempY2 < 0) tempY2 = 0;
-                examplePoints.add(new Point((i), tempY2));
+                examplePoints.add(new Point((i*i*i), tempY2));
             }
         }
 
@@ -188,6 +188,11 @@ public class Graph
         return points;
     }
 
+    public ArrayList<Point> getOriginalPoints()
+    {
+        return originalPoints;
+    }
+
     public void setPoints(ArrayList<Point> points)
     {
         this.points = points;
@@ -196,6 +201,23 @@ public class Graph
     public void setInstancePoints(ArrayList<Point> points)
     {
         Graph.instance.points = points;
+    }
+
+    private ArrayList<Point> copyPpints(ArrayList<Point> points)
+    {
+        ArrayList<Point> copy_point = new ArrayList();
+
+        for (Point p : points)
+        {
+            copy_point.add(new Point(p.x, p.y));
+        }
+
+        return copy_point;
+    }
+
+    public void setOriginalPoints(ArrayList<Point> originalPoints)
+    {
+        this.originalPoints = originalPoints;
     }
 }
 

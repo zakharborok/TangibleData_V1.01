@@ -16,7 +16,7 @@ public class TouchFunctionController extends Thread
     {
         super("Give me touches");
         this.responseHandler = responseHandler;
-        graphAnalyser = new GraphAnalyser(Graph.instance.getPoints(), Graph.instance.getType());
+        graphAnalyser = new GraphAnalyser(Graph.instance.getOriginalPoints(), Graph.instance.getType());
         soundGraphGenerator = new SoundGraphGenerator(Graph.instance.getPoints());
     }
 
