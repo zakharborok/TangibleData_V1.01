@@ -27,24 +27,43 @@ public class GraphConverter
 
     }
 
-    public static ArrayList<Point> convertPoints()
+    public static void convertPoints()
     {
         //TODO Convert the points in to x and y coordinates to be used by the graph
-
         //Works if graph is 2 Dimenional by adding x and y coordinates to point array
         ArrayList<Point> graph = new ArrayList<Point>();
-        int x, y;
-        for (String[] points : csvPoints)
-        {
-            if (points[0].matches("-?\\d+") && points[1].matches("-?\\d+"))
-            {
-                x = Integer.parseInt(points[0]);
-                y = Integer.parseInt(points[1]);
-                graph.add(new Point(x, y));
-            }
-        }
+        ArrayList<String> names = new ArrayList<>();
 
-        return graph;
+
+        if (csvPoints.get(0).length == 2 && csvPoints.get(0)[0].replaceAll("[\uFEFF-\uFFFF]","").equals("x") && csvPoints.get(0)[1].replaceAll("\\s+","").equals("y"))
+        {
+            Log.d("ddd", "convertPoints: Linear ");
+            for (String[] points : csvPoints)
+            {
+                if (points[0].matches("-?\\d+") && points[1].matches("-?\\d+"))
+                    graph.add(new Point(Integer.parseInt(points[0]), Integer.parseInt(points[1])));
+
+            }
+            graphType = Graph.LINEAR_MODE;
+            Graph.instance.setType(Graph.LINEAR_MODE);
+            Graph.instance.setInstancePoints(Graph.instance.resizeLinearPoints(graph));
+
+        } else if (csvPoints.get(0).length == 2 && !/*not*/csvPoints.get(0)[0].equals("\uFEFFx") && csvPoints.get(0)[1].equals("y"))
+        {
+            Log.d("ddd", "convertPoints: Bar ");
+            for (String[] points : csvPoints)
+            {
+                if (points[1].matches("-?\\d+"))
+                {
+                    graph.add(new Point(0, Integer.parseInt(points[1])));
+                    names.add(points[0]);
+                }
+            }
+            graphType = Graph.BAR_CHART_MODE;
+            Graph.instance.setType(Graph.BAR_CHART_MODE);
+            Graph.instance.setInstancePoints(Graph.instance.resizeBarChartPoints(graph));
+            Graph.instance.setBarChartNames(names);
+        }
     }
 
     public static void displayPoints()

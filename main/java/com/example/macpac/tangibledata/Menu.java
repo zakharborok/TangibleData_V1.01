@@ -101,7 +101,7 @@ public class Menu extends ListActivity
             e.printStackTrace();
         }
 
-        Intent i = new Intent(Menu.this, GraphTypeView.class);
+        Intent i = new Intent(Menu.this, GraphView.class);
         startActivity(i);
     }
 

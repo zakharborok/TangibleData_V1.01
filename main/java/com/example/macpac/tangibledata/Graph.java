@@ -22,6 +22,7 @@ public class Graph
     private int type;
     private ArrayList<Point> points;
     private ArrayList<Point> originalPoints;
+    private ArrayList<String> barChartNames;
 
     public Graph(int type, ArrayList<Point> points, DisplayMetrics metrics)
     {
@@ -183,6 +184,11 @@ public class Graph
         return type;
     }
 
+    public void setType(int type)
+    {
+        this.type = type;
+    }
+
     public ArrayList<Point> getPoints()
     {
         return points;
@@ -218,6 +224,16 @@ public class Graph
     public void setOriginalPoints(ArrayList<Point> originalPoints)
     {
         this.originalPoints = originalPoints;
+    }
+
+    public void setBarChartNames(ArrayList<String> barChartNames)
+    {
+        this.barChartNames = barChartNames;
+    }
+
+    public ArrayList<String> getBarChartNames()
+    {
+        return barChartNames;
     }
 }
 

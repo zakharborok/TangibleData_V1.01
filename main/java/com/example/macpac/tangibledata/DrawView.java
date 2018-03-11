@@ -19,20 +19,20 @@ public class DrawView extends View
     public DrawView(Context context)
     {
         super(context);
-
         Graph.instance = new Graph(GraphConverter.getGraphType(), null);
+        GraphConverter.convertPoints();
         Graph.instance.setOriginalPoints(Graph.instance.getExampleLinerDataPoints());
 
-        switch (Graph.instance.getType())
-        {
-            case Graph.LINEAR_MODE:
-                Graph.instance.setInstancePoints(Graph.instance.resizeLinearPoints(/*GraphConverter.convertPoints()*/Graph.instance.getExampleLinerDataPoints()));
-                break;
-
-            case Graph.BAR_CHART_MODE:
-                Graph.instance.setInstancePoints(Graph.instance.resizeBarChartPoints(/*GraphConverter.convertPoints()*/Graph.instance.getExampleBarChartDataPoints()));
-                break;
-        }
+//        switch (Graph.instance.getType())
+//        {
+//            case Graph.LINEAR_MODE:
+//                Graph.instance.setInstancePoints(Graph.instance.resizeLinearPoints(/*GraphConverter.convertPoints()*/Graph.instance.getExampleLinerDataPoints()));
+//                break;
+//
+//            case Graph.BAR_CHART_MODE:
+//                Graph.instance.setInstancePoints(Graph.instance.resizeBarChartPoints(/*GraphConverter.convertPoints()*/Graph.instance.getExampleBarChartDataPoints()));
+//                break;
+//        }
     }
 
     public DrawView(Context context, AttributeSet attrs)
