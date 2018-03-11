@@ -21,15 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".GraphTypeView"
-            android:screenOrientation="userPortrait">
-
-        </activity>
         <activity android:name=".GraphView"
             android:screenOrientation="userLandscape">
-        </activity>
-        <activity
-            android:name=".Settings">
         </activity>
     </application>
 
