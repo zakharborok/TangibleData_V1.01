@@ -26,10 +26,7 @@ public class GraphView extends Activity
         gestureDetector = (new GestureDetector(this, new GestureListener(this)));
 
         drawView = new DrawView(this);
-        if(Graph.instance.getType() == Graph.LINEAR_MODE)
-            drawView.setBackgroundColor(Color.rgb(34, 49, 63));
-        else
-            drawView.setBackgroundColor(Color.rgb(30, 139, 195));
+        drawView.setBackgroundColor(Color.rgb(7,7,7));
         setContentView(drawView);
 
         responseHandler = new ResponseHandler(this);

@@ -31,16 +31,26 @@ public class TouchFunctionController extends Thread
             e.printStackTrace();
         }
 
-        switch (responseHandler.getTouchCounter())
+        switch (Graph.instance.getType())
         {
-            case 2:
-                graphAnalyser.speak(responseHandler.getContext());
-                break;
-            case 3:
-                if (!Speech.instance.isTalking())
-                    soundGraphGenerator.run();
+            case Graph.LINEAR_MODE:
+                switch (responseHandler.getTouchCounter())
+                {
+                    case 2:
+                        graphAnalyser.speak(responseHandler.getContext());
+                        break;
+                    case 3:
+                        if (!Speech.instance.isTalking())
+                            soundGraphGenerator.run();
+                        break;
+
+                }
                 break;
 
+            case Graph.BAR_CHART_MODE:
+                if (responseHandler.getTouchCounter() == 2)
+                    graphAnalyser.speak(responseHandler.getContext());
+                break;
         }
     }
 

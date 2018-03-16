@@ -59,7 +59,9 @@ public class Menu extends ListActivity
         fileList = (ArrayList<String>) graphFileManager.getPath(f);
         if (fileList.size() != 0)
         {
-            ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, graphFileManager.getPath(f));
+            ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, graphFileManager.getPath(f)){
+
+            };
             setListAdapter(directoryList);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {

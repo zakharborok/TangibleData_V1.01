@@ -76,25 +76,26 @@ public class ResponseHandler
             timeKeeper = System.currentTimeMillis();
             updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
 
-            detectAxesStartEndOfGraph(x,y);
+            detectAxesStartEndOfGraph(x, y);
 
             if (touchCounter == 1) Speech.instance.stopTalk();
+
+            if (touchCounter == 2)
+            {
+                if (!TouchFunctionController.instanse.isAlive())
+                {
+                    TouchFunctionController.instanse = new TouchFunctionController(this);
+                    TouchFunctionController.instanse.start();
+                }
+            }
 
             switch (Graph.instance.getType())
             {
                 case Graph.LINEAR_MODE:
-                    if (touchCounter == 2)
-                    {
-                        if (!TouchFunctionController.instanse.isAlive())
-                        {
-                            TouchFunctionController.instanse = new TouchFunctionController(this);
-                            TouchFunctionController.instanse.start();
-                        }
-                    } else
-                        hundleTouchNavigation(x, y);
+                    hundleTouchNavigation(x, y);
                     break;
 
-                case Graph.BAR_CHART_MODE://:TODO make representation(analysis)
+                case Graph.BAR_CHART_MODE:
                     hundleTouchRepresentation(x, y);
                     break;
             }
@@ -106,16 +107,13 @@ public class ResponseHandler
         if (x < (double) Graph.instance.X_OFFSET * 0.9)
         {
             Speech.instance.talk("Start of the Graph");
-        }
-        else if (x >= (double) Graph.instance.X_OFFSET * 0.9 && x <= (double) Graph.instance.X_OFFSET * 1.1)
+        } else if (x >= (double) Graph.instance.X_OFFSET * 0.9 && x <= (double) Graph.instance.X_OFFSET * 1.1)
         {
             Speech.instance.talk("Y Axis, with range from " + findTheSmallesYVal(Graph.instance.getOriginalPoints()) + " to " + findTheLargestYVal(Graph.instance.getOriginalPoints()) + " .");
-        }
-        else if (y >= (double) Graph.instance.Y_OFFSET * 18 * 0.9 && y <= (double) Graph.instance.Y_OFFSET * 18 * 1.1)
+        } else if (y >= (double) Graph.instance.Y_OFFSET * 18 * 0.9 && y <= (double) Graph.instance.Y_OFFSET * 18 * 1.1)
         {
             Speech.instance.talk("X Axis, with range from " + findTheSmallesXVal(Graph.instance.getOriginalPoints()) + " to " + findTheLargestXVal(Graph.instance.getOriginalPoints()) + " .");
-        }
-        else if (x > Graph.instance.X_OFFSET * 18)
+        } else if (x > Graph.instance.X_OFFSET * 18)
         {
             Speech.instance.talk("End of the Graph");
         }
@@ -158,8 +156,7 @@ public class ResponseHandler
                 {
                     lastBarChartPressed = i;
                     Speech.instance.talk(Graph.instance.getBarChartNames().get(i));
-                }
-                else if (lastBarChartPressed == i)
+                } else if (lastBarChartPressed == i)
                 {
                     toneGenerator.generateAndPlayTone((int) (((double) (255 - pulseStength) / (255.0)) * (2048.0 - 256.0)) + 256, 1000).start();
                 }
