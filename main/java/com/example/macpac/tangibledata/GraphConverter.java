@@ -79,7 +79,6 @@ public class GraphConverter
             {
                 Log.d("CSV File Data", point);
             }
-
         }
     }
 

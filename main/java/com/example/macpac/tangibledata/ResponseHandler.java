@@ -107,7 +107,7 @@ public class ResponseHandler
         if (x < (double) Graph.instance.X_OFFSET * 0.9)
         {
             Speech.instance.talk("Start of the Graph");
-        } else if (x >= (double) Graph.instance.X_OFFSET * 0.9 && x <= (double) Graph.instance.X_OFFSET * 1.1)
+        } else if (x >= (double) Graph.instance.X_OFFSET * 0.9 && x <= (double) Graph.instance.X_OFFSET * 1.1 && Graph.instance.getType() == Graph.LINEAR_MODE)
         {
             Speech.instance.talk("Y Axis, with range from " + findTheSmallesYVal(Graph.instance.getOriginalPoints()) + " to " + findTheLargestYVal(Graph.instance.getOriginalPoints()) + " .");
         } else if (y >= (double) Graph.instance.Y_OFFSET * 18 * 0.9 && y <= (double) Graph.instance.Y_OFFSET * 18 * 1.1)
