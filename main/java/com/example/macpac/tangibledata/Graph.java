@@ -223,7 +223,14 @@ public class Graph
 
     public void setOriginalPoints(ArrayList<Point> originalPoints)
     {
-        this.originalPoints = originalPoints;
+        int x,y;
+        ArrayList<Point> copyList = new ArrayList<>();
+        for (Point point: originalPoints){
+            x = point.x;
+            y = point.y;
+            copyList.add(new Point(x,y));
+        }
+        this.originalPoints = copyList;
     }
 
     public void setBarChartNames(ArrayList<String> barChartNames)

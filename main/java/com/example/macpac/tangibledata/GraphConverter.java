@@ -46,6 +46,7 @@ public class GraphConverter
             }
             graphType = Graph.LINEAR_MODE;
             Graph.instance.setType(Graph.LINEAR_MODE);
+            Graph.instance.setOriginalPoints(graph);
             Graph.instance.setInstancePoints(Graph.instance.resizeLinearPoints(graph));
 
         } else if (csvPoints.get(0).length == 2 && !/*not*/csvPoints.get(0)[0].equals("\uFEFFx") && csvPoints.get(0)[1].equals("y"))
@@ -61,6 +62,7 @@ public class GraphConverter
             }
             graphType = Graph.BAR_CHART_MODE;
             Graph.instance.setType(Graph.BAR_CHART_MODE);
+            Graph.instance.setOriginalPoints(graph);
             Graph.instance.setInstancePoints(Graph.instance.resizeBarChartPoints(graph));
             Graph.instance.setBarChartNames(names);
         }
