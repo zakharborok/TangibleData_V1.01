@@ -68,20 +68,6 @@ public class ResponseHandler
         this(parentActivity, Graph.instance.getPoints(), Graph.instance.getType());
     }
 
-    public float findTheLargestYVal(ArrayList<Point> listOfPoints)
-    {
-        float max = 0;
-        if (listOfPoints.size() > 0)
-        {
-            max = listOfPoints.get(0).y;
-            for (int i = 0; i < listOfPoints.size(); i++)
-            {
-                if (listOfPoints.get(i).y > max)
-                    max = listOfPoints.get(i).y;
-            }
-        }
-        return max;
-    }
 
     public void handleTouch(int x, int y)
     {
@@ -89,6 +75,10 @@ public class ResponseHandler
         {
             timeKeeper = System.currentTimeMillis();
             updateTouchCounter(System.currentTimeMillis() - timeBetweenTouch);
+
+            detectAxesStartEndOfGraph(x,y);
+
+            if (touchCounter == 1) Speech.instance.stopTalk();
 
             switch (Graph.instance.getType())
             {
@@ -104,10 +94,30 @@ public class ResponseHandler
                         hundleTouchNavigation(x, y);
                     break;
 
-                case Graph.BAR_CHART_MODE:
+                case Graph.BAR_CHART_MODE://:TODO make representation(analysis)
                     hundleTouchRepresentation(x, y);
                     break;
             }
+        }
+    }
+
+    private void detectAxesStartEndOfGraph(int x, int y)
+    {
+        if (x < (double) Graph.instance.X_OFFSET * 0.9)
+        {
+            Speech.instance.talk("Start of the Graph");
+        }
+        else if (x >= (double) Graph.instance.X_OFFSET * 0.9 && x <= (double) Graph.instance.X_OFFSET * 1.1)
+        {
+            Speech.instance.talk("Y Axis, with range from " + findTheSmallesYVal(Graph.instance.getOriginalPoints()) + " to " + findTheLargestYVal(Graph.instance.getOriginalPoints()) + " .");
+        }
+        else if (y >= (double) Graph.instance.Y_OFFSET * 18 * 0.9 && y <= (double) Graph.instance.Y_OFFSET * 18 * 1.1)
+        {
+            Speech.instance.talk("X Axis, with range from " + findTheSmallesXVal(Graph.instance.getOriginalPoints()) + " to " + findTheLargestXVal(Graph.instance.getOriginalPoints()) + " .");
+        }
+        else if (x > Graph.instance.X_OFFSET * 18)
+        {
+            Speech.instance.talk("End of the Graph");
         }
     }
 
@@ -133,12 +143,6 @@ public class ResponseHandler
                 else if (distanceToTheGraph < -Resources.getSystem().getDisplayMetrics().widthPixels / 10)
                     Speech.instance.talk("Graph is below");
             }
-        } else
-        {
-            if (x < Graph.instance.X_OFFSET)
-                Speech.instance.talk("Start of the Graph");
-            else if (x > Graph.instance.X_OFFSET * 18)
-                Speech.instance.talk("End of the Graph");
         }
     }
 
@@ -273,5 +277,65 @@ public class ResponseHandler
     public Context getContext()
     {
         return parentActivity.getApplicationContext();
+    }
+
+    public float findTheLargestYVal(ArrayList<Point> listOfPoints)
+    {
+        float max = 0;
+        if (listOfPoints.size() > 0)
+        {
+            max = listOfPoints.get(0).y;
+            for (int i = 0; i < listOfPoints.size(); i++)
+            {
+                if (listOfPoints.get(i).y > max)
+                    max = listOfPoints.get(i).y;
+            }
+        }
+        return max;
+    }
+
+    private float findTheSmallesYVal(ArrayList<Point> listOfPoints)
+    {
+        float min = listOfPoints.get(0).y;
+        if (listOfPoints.size() > 0)
+        {
+            min = listOfPoints.get(0).y;
+            for (int i = 0; i < listOfPoints.size(); i++)
+            {
+                if (listOfPoints.get(i).y < min)
+                    min = listOfPoints.get(i).y;
+            }
+        }
+        return min;
+    }
+
+    private float findTheLargestXVal(ArrayList<Point> listOfPoints)
+    {
+        float max = 0;
+        if (listOfPoints.size() > 0)
+        {
+            max = listOfPoints.get(0).x;
+            for (int i = 0; i < listOfPoints.size(); i++)
+            {
+                if (listOfPoints.get(i).x > max)
+                    max = listOfPoints.get(i).x;
+            }
+        }
+        return max;
+    }
+
+    private float findTheSmallesXVal(ArrayList<Point> listOfPoints)
+    {
+        float min = listOfPoints.get(0).x;
+        if (listOfPoints.size() > 0)
+        {
+            min = listOfPoints.get(0).x;
+            for (int i = 0; i < listOfPoints.size(); i++)
+            {
+                if (listOfPoints.get(i).x < min)
+                    min = listOfPoints.get(i).x;
+            }
+        }
+        return min;
     }
 }

@@ -40,4 +40,9 @@ public class Speech
     {
         return tts.isSpeaking();
     }
+
+    public void stopTalk()
+    {
+        tts.stop();
+    }
 }

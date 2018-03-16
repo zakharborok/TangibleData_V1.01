@@ -54,9 +54,9 @@ public class DrawView extends View
 
     private void drawGraph(Canvas canvas)
     {
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.YELLOW);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeWidth(4f);
+        paint.setStrokeWidth(16f);
 
         if (Graph.instance.getPoints().size() > 0)
             switch (Graph.instance.getType())
@@ -76,8 +76,8 @@ public class DrawView extends View
 
     private void drawScale(Canvas canvas)
     {
-        paint.setColor(Color.GRAY);
-        paint.setStrokeWidth(6f);
+        paint.setARGB(250,104,104,0);
+        paint.setStrokeWidth(10f);
 
         canvas.drawLine(Graph.instance.X_OFFSET, Graph.instance.Y_OFFSET, Graph.instance.X_OFFSET, Graph.instance.Y_OFFSET * 18, paint);
         canvas.drawLine(Graph.instance.X_OFFSET, Graph.instance.Y_OFFSET * 18, Graph.instance.X_OFFSET * 18, Graph.instance.Y_OFFSET * 18, paint);
