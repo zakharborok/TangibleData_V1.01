@@ -8,14 +8,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * \class GraphConverter
+ * Class converts a csv file to a list of points and identifies the graph type based on the file format
+ */
+public class GraphConverter {
+    public static CSVFile csv; /**< Stores the csv file that is to be converted */
+    public static List<String[]> csvPoints; /**< List of entries from the parsed csv file*/
+    public static File path; /**< File path of the csv file on the device */
+    private static int graphType; /**< Int that represents the type of graph that is identified */
 
-public class GraphConverter
-{
-    public static CSVFile csv;
-    public static List<String[]> csvPoints;
-    public static File path;
-    private static int graphType;
-
+    /**
+     * Method to create a CSV object, parse the contents of the csv file and set its file path
+     * @param filePath Path to selected csv file
+     */
     public static void setCSVfile(File filePath) throws IOException
     {
         csv = new CSVFile(filePath.getAbsolutePath());
@@ -24,6 +30,11 @@ public class GraphConverter
 
     }
 
+    /**
+     * Method to convert the parsed values of the csv file and convert them into a list of points. The graph type is also identified depending on the structure of the data.
+     * Line Graphs are detected only if the file contain a column labeled x and y
+     * Bar Graphs are detected if there are two columns one must be a label column and the other must be a y column
+     */
     public static void convertPoints()
     {
         //TODO Convert the points in to x and y coordinates to be used by the graph
@@ -65,6 +76,9 @@ public class GraphConverter
         }
     }
 
+    /**
+     * Method to print out the parsed data of the csv file
+     */
     public static void displayPoints()
     {
         //Prints all the data read by the csv file
@@ -79,11 +93,21 @@ public class GraphConverter
         }
     }
 
+    /**
+     * \brief Setter method
+     * Method to set the graph type this allows alteration of the type if required
+     * @param type represents the graph type that ahs been identified
+     */
     public static void setGraphType(int type)
     {
         graphType = type;
     }
 
+    /**
+     * \brief Getter method
+     * Method to get the current graph type of the converter
+     * @return returns the graph type as an int Linear Graphs = 0 , Bar Graphs = 1
+     */
     public static int getGraphType()
     {
         return graphType;

@@ -36,7 +36,7 @@ public class UserInterfaceTest {
         //Select Sample File From ListView
         onView(withText("SampleFile.csv")).perform(longClick());
         //Check if GraphTypeView Activity has opened
-        intended(hasComponent(new ComponentName(getTargetContext(), GraphTypeView.class)));
+        intended(hasComponent(new ComponentName(getTargetContext(), GraphView.class)));
     }
 
     @Test
@@ -49,46 +49,21 @@ public class UserInterfaceTest {
     public void testSelectLineGraph(){
         //Select Sample File From ListView
         onView(withText("SampleFile.csv")).perform(longClick());
-        //Select Line Graph mode
-        onView(withId(R.id.buttonLineGraph)).perform(longClick());
         //Check if GraphView Activity has opened
         intended(hasComponent(new ComponentName(getTargetContext(), GraphView.class)));
         //Check if Graph is in Line Graph Mode
         assertTrue(Graph.instance.getType() == Graph.LINEAR_MODE);
     }
 
-    @Test
-    public void testSpeechLineGraph(){
-        //Select Sample File From ListView
-        onView(withText("SampleFile.csv")).perform(longClick());
-        //Select Line Graph mode
-        //click() will not Change Activity Instead will Activate Speech
-        onView(withId(R.id.buttonLineGraph)).perform(click());
-        //Check if Activity Stays the Same
-        intended(hasComponent(new ComponentName(getTargetContext(), GraphTypeView.class)));
-    }
 
     @Test
     public void testSelectBarGraph(){
         //Select Sample File From ListView
-        onView(withText("SampleFile.csv")).perform(longClick());
-        //Select Bar Graph mode
-        onView(withId(R.id.buttonBarGraph)).perform(longClick());
+        onView(withText("BarGraph.csv")).perform(longClick());
         //Check if GraphView Activity has opened
         intended(hasComponent(new ComponentName(getTargetContext(), GraphView.class)));
         //Check if Graph is in Bar Graph Mode
         assertTrue(Graph.instance.getType() == Graph.BAR_CHART_MODE);
-    }
-
-    @Test
-    public void testSpeechBarGraph(){
-        //Select Sample File From ListView
-        onView(withText("SampleFile.csv")).perform(longClick());
-        //Select Bar Graph mode
-        //click() will not Change Activity Instead will Activate Speech
-        onView(withId(R.id.buttonBarGraph)).perform(click());
-        //Check if Activity Stays the Same
-        intended(hasComponent(new ComponentName(getTargetContext(), GraphTypeView.class)));
     }
 
     @After
