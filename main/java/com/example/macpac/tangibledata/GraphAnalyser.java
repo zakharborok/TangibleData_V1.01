@@ -5,30 +5,49 @@ import android.graphics.Point;
 
 import java.util.ArrayList;
 
+/**
+ * \class GraphAnalyser
+ * Class to analyse a graph and proide a descrition based on its type
+ */
 public class GraphAnalyser {
-    private String description;
-    private ArrayList<Point> points;
-    private Point maxY;
-    private Point minY;
-    private int graphType;
+    private String description; /**< String to represent the description of the graph */
+    private ArrayList<Point> points; /**< Arraylist that stores the points to be analysed */
+    private Point maxY; /**< Point object of the point that has the max Y value */
+    private Point minY; /**< Point object of the point that has the min Y value */
+    private int graphType; /**< int to identify the graph type */
 
+    /**
+     * \brief Constructor.
+     * Method to construct a GraphAnalyser and set the points it must analyse and graph type
+     */
     GraphAnalyser(ArrayList<Point> points, int graphType){
         this.points = points;
         this.graphType = graphType;
     }
 
+    /**
+     * \brief Getter method
+     * Method to get the description of the graph that is produced by the analyser
+     * @return returns the description of the graph
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * \brief Getter method
+     * Method to get the points of the graph that are used by the analyser
+     * @return returns the points of the graph
+     */
     public ArrayList<Point> getPoints() {
         return points;
     }
 
+    /**
+     * Method to analyse the points of the graph based on the graph type and create a breif description
+     */
     private void analysePoints(){
         getInfo();
-        //:TODO Round Values
-        //:TODO add stopper
         int len = points.size()-1;
         if (graphType == Graph.LINEAR_MODE) {
             description += "This is a Line Graph, ";
@@ -44,11 +63,19 @@ public class GraphAnalyser {
 
     }
 
+    /**
+     * Method to enable the audio assistant to describe the graph
+     * @param context Current context of the function call
+     */
     public void speak(Context context){
         analysePoints();
         Speech.instance.talk(description);
     }
 
+    /**
+     * \brief Find Max and Min Y value
+     * Method to find points with the maximum and minimum values for Y
+     */
     private void getInfo(){
         Point maxY = new Point(points.get(0).x, points.get(0).y);
         Point minY = new Point(points.get(0).x, points.get(0).y);

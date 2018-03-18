@@ -10,9 +10,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * \class GraphFileManager
+ * Class to find csv files in a directory and get their file names
+ */
 public class GraphFileManager
 {
-    //Filters The parent directory and gets all the CSV files
+    /**
+     * Method to filter a given directory and find all the csv files
+     * @param parentDir File that represents the directory to search
+     */
     public List<File> getAllFiles(File parentDir)
     {
         List<File> inFiles = new ArrayList<>();
@@ -37,7 +44,11 @@ public class GraphFileManager
         return inFiles;
     }
 
-    //Gets the file name and converts the List<File> to List<String>
+    /**
+     * Method to get the file name and converts the List<File> to List<String>
+     * @param parentDir File that represents the directory to search
+     * @return list of strings that contain all the file names in the directory
+     */
     public List<String> getPath(File parentDir)
     {
         List<String> mPath = new ArrayList<String>();
