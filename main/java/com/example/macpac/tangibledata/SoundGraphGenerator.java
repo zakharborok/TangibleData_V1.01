@@ -5,14 +5,23 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-
+/**
+ * \class SoundGraphGenerator
+ * \brief Class to create sound version of the graph.
+ * SoundGraphGenerator creates MToneGenerator object for each point from the graphs and assembles them together as a single continues sound.
+ */
 public class SoundGraphGenerator
 {
-    private final float LARGEST_TIME_TO_PLAY = 3000;
-    private final int minFreq = 256, maxFreq = 2048;
-    private ArrayList<Integer> frequenciesToPlay;
-    private float timeToPlay[];
+    private final float LARGEST_TIME_TO_PLAY = 3000; /**< Longest time of a sound for any point. */
+    private final int minFreq = 256/**< Minimum frequency of a sound to be created. */, maxFreq = 2048/**< Maximum frequency of a sound to be created. */;
+    private ArrayList<Integer> frequenciesToPlay; /**< List of frequencies created. */
+    private float timeToPlay[]; /**< Durations of sounds. */
 
+    /**
+     * \brief Constructor.
+     * Method to create instance of SoundGraphGenerator.
+     * @param points List of points, based on which sound representation will be created.
+     */
     public SoundGraphGenerator(ArrayList<Point> points)
     {
         frequenciesToPlay = new ArrayList<>();
@@ -20,6 +29,9 @@ public class SoundGraphGenerator
         transformYValuesIntoFreq(points);
     }
 
+    /**
+     * Creates objects which contain sound representations of each point and plays them one after another.
+     */
     public void run()
     {
         ArrayList<Thread> soundsToPlay = new ArrayList<>();
@@ -41,6 +53,10 @@ public class SoundGraphGenerator
         }
     }
 
+    /**
+     * Converts y values of points into frequencies.
+     * @param points Points to convert.
+     */
     private void transformYValuesIntoFreq(ArrayList<Point> points)
     {
         if (points.size() > 0)

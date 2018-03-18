@@ -1,13 +1,21 @@
 package com.example.macpac.tangibledata;
 
+/**
+ * \class TouchFunctionController
+ * \brief Class which is responsible for function managing calls depending on number of touches.
+ * Thread of this class is created when user touches the screen. Then put to sleep for 1.5s. After which it wakes up to check number of touches made during that period and calls correspondingly functions.
+ */
 public class TouchFunctionController extends Thread
 {
-    public static TouchFunctionController instanse;
-    private ResponseHandler responseHandler;
-    private GraphAnalyser graphAnalyser;
-    private SoundGraphGenerator soundGraphGenerator;
+    public static TouchFunctionController instanse; /**< Global reference to a single instance of the class. */
+    private ResponseHandler responseHandler; /**< Reference of a ResponseHandler which created a thread. It is used to check number of touches made during sleep period.*/
+    private GraphAnalyser graphAnalyser; /**< GraphAnalyser is called when number of touches is 3.*/
+    private SoundGraphGenerator soundGraphGenerator; /**< GraphAnalyser is called when number of touches is 4.*/
 
-
+    /**
+     * \brief Constructor.
+     * Method to create instance of TouchFunctionController.
+     */
     public TouchFunctionController(ResponseHandler responseHandler)
     {
         super("Give me touches");
