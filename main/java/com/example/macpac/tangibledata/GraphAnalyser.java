@@ -5,10 +5,6 @@ import android.graphics.Point;
 
 import java.util.ArrayList;
 
-/**
- * Created by cabeywickra on 22/02/2018.
- */
-
 public class GraphAnalyser {
     private String description;
     private ArrayList<Point> points;

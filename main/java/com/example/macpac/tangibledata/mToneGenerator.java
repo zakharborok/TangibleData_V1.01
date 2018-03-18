@@ -8,9 +8,6 @@ import android.os.Looper;
 
 import static java.lang.Thread.sleep;
 
-/**
- * Created by MacPac on 23/02/2018.
- */
 
 public class mToneGenerator
 {

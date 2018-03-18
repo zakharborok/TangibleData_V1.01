@@ -7,10 +7,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.Window;
 
-/**
- * Created by cabeywickra on 18/01/2018.
- */
-
 public class GraphView extends Activity
 {
     private DrawView drawView;

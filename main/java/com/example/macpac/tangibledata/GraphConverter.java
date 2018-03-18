@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by cabeywickra on 31/01/2018.
- */
 
 public class GraphConverter
 {

@@ -18,11 +18,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-
-/**
- * Created by MacPac on 15/01/2018.
- */
-
 public class ResponseHandler
 {
     public static final int SINGLE_PULSE_TIME_ABOVE = 600;

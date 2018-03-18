@@ -8,9 +8,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * Created by MacPac on 15/01/2018.
- */
 
 public class DrawView extends View
 {

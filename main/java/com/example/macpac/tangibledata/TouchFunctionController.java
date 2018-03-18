@@ -1,9 +1,5 @@
 package com.example.macpac.tangibledata;
 
-/**
- * Created by MacPac on 05/03/2018.
- */
-
 public class TouchFunctionController extends Thread
 {
     public static TouchFunctionController instanse;

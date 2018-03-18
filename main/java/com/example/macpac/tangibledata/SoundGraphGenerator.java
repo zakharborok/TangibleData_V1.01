@@ -5,9 +5,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by MacPac on 23/02/2018.
- */
 
 public class SoundGraphGenerator
 {

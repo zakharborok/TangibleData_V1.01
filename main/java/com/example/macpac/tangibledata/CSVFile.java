@@ -7,10 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by cabeywickra on 31/01/2018.
- */
-
 public class CSVFile
 {
     String filePath;

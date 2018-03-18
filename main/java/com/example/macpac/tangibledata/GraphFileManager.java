@@ -10,11 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-/**
- * Created by cabeywickra on 26/01/2018.
- * TODO Read csv files from all folders
- */
-
 public class GraphFileManager
 {
     //Filters The parent directory and gets all the CSV files

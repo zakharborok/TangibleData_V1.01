@@ -9,10 +9,6 @@ import java.util.Collections;
 
 import static java.lang.StrictMath.floor;
 
-/**
- * Created by MacPac on 15/01/2018.
- */
-
 public class Graph
 {
     public static Graph instance;
