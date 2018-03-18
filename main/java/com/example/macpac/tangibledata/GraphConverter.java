@@ -34,10 +34,10 @@ public class GraphConverter {
      * Method to convert the parsed values of the csv file and convert them into a list of points. The graph type is also identified depending on the structure of the data.
      * Line Graphs are detected only if the file contain a column labeled x and y
      * Bar Graphs are detected if there are two columns one must be a label column and the other must be a y column
+     * This function works only if the graph is 2 Dimenional by adding x and y coordinates to a point array
      */
     public static void convertPoints()
     {
-        //TODO Convert the points in to x and y coordinates to be used by the graph
         //Works if graph is 2 Dimenional by adding x and y coordinates to point array
         ArrayList<Point> graph = new ArrayList<Point>();
         ArrayList<String> names = new ArrayList<>();
