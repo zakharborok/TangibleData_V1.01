@@ -80,7 +80,6 @@ public class GraphAnalyser {
         Point maxY = new Point(points.get(0).x, points.get(0).y);
         Point minY = new Point(points.get(0).x, points.get(0).y);
 
-        //:TODO save corresponding Xs to maxs
         for (int i = 0; i < points.size(); i++)
         {
             if (minY.y > points.get(i).y) {

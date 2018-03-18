@@ -6,11 +6,14 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-
+/**
+ * \class GestureListener
+ * Class to listen for and identify the swipe motion from right to left to go back
+ */
 public class GestureListener extends GestureDetector.SimpleOnGestureListener {
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private static final int SWIPE_MIN_DISTANCE = 120; /**< Minimum swipe distance*/
+    private static final int SWIPE_MAX_OFF_PATH = 250; /**< Maximum swipe distance*/
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200; /**< Velocity of swipe */
 
 
     private Context context;
@@ -44,6 +47,10 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
     }
 
+    /**
+     *Method listens for and identifies swipe from left to right and launches the start activity
+     * @return Boolean value True: Swipe detected, False: No swipe detected
+     */
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY){
@@ -54,6 +61,9 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener {
         return false;
     }
 
+    /**
+     * Method to launch the menu activity if a swipe motion is detected by the listener
+     */
     public void startActivity() {
         context.startActivity(new Intent(context, Menu.class));
     }

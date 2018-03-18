@@ -21,15 +21,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Menu extends ListActivity
-{
-    //TODO Add permissions prompt
-    private ArrayList<String> fileList = new ArrayList<String>();
-    private GraphFileManager graphFileManager = new GraphFileManager();
-    private ListView lv;
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+/**
+ * /class Menu
+ * Class to display csv files as a list view when the application launches
+ */
+public class Menu extends ListActivity {
+    private ArrayList<String> fileList = new ArrayList<String>(); /**< List of all the csv file names*/
+    private GraphFileManager graphFileManager = new GraphFileManager(); /**< FileManager is used to find csv files in a given folder */
+    private ListView lv; /**< Globally defined list view that is displayed in the view */
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123; /**< Request code for permissions to access storage*/
 
-
+    /**
+     * Method runs when the application is first launched, it sets the content view to display the activity menu.
+     * It then sets the parent search directory as "CSV" and creates the list view
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -41,6 +46,9 @@ public class Menu extends ListActivity
         ListDir(root);
     }
 
+    /**
+     * Method runs when the application is being resumed it activates the audio assistant to say "Select File"
+     */
     @Override
     protected void onResume()
     {
@@ -48,6 +56,10 @@ public class Menu extends ListActivity
         Speech.instance.talk("Select file");
     }
 
+    /**
+     * Method searches for csv files in the defined directory and adds the results to the list view
+     * @param f Directory that must be searched to find csv files
+     */
     void ListDir(File f)
     {
         int permission = PermissionChecker.checkSelfPermission(getApplicationContext(),"android.permission.READ_EXTERNAL_STORAGE");
@@ -89,6 +101,11 @@ public class Menu extends ListActivity
         }
     }
 
+    /**
+     * Method converts the csv file into a graph using the graph converter and launches the graph view activity
+     * @param file path of the file that is to be converted
+     * @throws FileNotFoundException handles the exception of the file potentially being changed while launching the new activity
+     */
     private void viewCsv(String file) throws FileNotFoundException
     {
         File csvFile = new File("sdcard/CSV/" + file);
@@ -107,6 +124,12 @@ public class Menu extends ListActivity
         startActivity(i);
     }
 
+    /**
+     * Method requests user permissons to access storage and then handles the user response
+     * @param requestCode Application specific request code to match with a result
+     * @param permissions Type of permissions
+     * @param grantResults Result of permissions request
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
