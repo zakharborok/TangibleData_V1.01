@@ -7,12 +7,20 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.Window;
 
+/**
+ * \class GraphView
+ * Class to draw and display the graph and handle touch events
+ */
 public class GraphView extends Activity
 {
-    private DrawView drawView;
-    private ResponseHandler responseHandler;
-    private GestureDetector gestureDetector;
+    private DrawView drawView; /**< Used to draw the graph and axis.*/
+    private ResponseHandler responseHandler; /**< Provides audio/haptic feedback based on user input*/
+    private GestureDetector gestureDetector; /**< Detects swipe to go back*/
 
+    /**
+     * Method is called when the activity is created to draw the graph.
+     * It sets the view and sets up the gesture detector and response handler to listen for user input
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -28,6 +36,9 @@ public class GraphView extends Activity
         responseHandler = new ResponseHandler(this);
     }
 
+    /**
+     * Method listens for and detects a swipe gesture
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
