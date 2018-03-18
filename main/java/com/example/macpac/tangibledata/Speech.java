@@ -7,6 +7,7 @@ import java.util.Locale;
 /**
  * \class Speech
  * \brief Class to verbally represent strings.
+ * We used built in library to perform this task.
  */
 public class Speech
 {
