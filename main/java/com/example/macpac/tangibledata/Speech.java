@@ -5,14 +5,18 @@ import android.speech.tts.TextToSpeech;
 import java.util.Locale;
 
 /**
- * Created by cabeywickra on 05/02/2018.
+ * \class Speech
+ * \brief Class to verbally represent strings.
  */
-
 public class Speech
 {
-    public static Speech instance = new Speech();
-    private TextToSpeech tts;
+    public static Speech instance = new Speech(); /**< Global reference to a single instance of the class. */
+    private TextToSpeech tts; /**< Object to transform text into speech. */
 
+    /**
+     * \brief Constrictor.
+     * Method to create object which would transform text into speech(UK Local, pitch:1.3, Speech rate:1).
+     */
     public Speech()
     {
         tts = new TextToSpeech(TangibleData.getContext(), new TextToSpeech.OnInitListener()
@@ -30,17 +34,28 @@ public class Speech
         });
     }
 
+    /**
+     * Method to call Global to this class object tts, to verbally say out text.
+     * @param str String to be verbally represented.
+     */
     public void talk(String str)
     {
         if (!tts.isSpeaking())
             tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);
     }
 
+    /**
+     * Method to check if app currently producing a speech.
+     * @return result of the check.
+     */
     public boolean isTalking()
     {
         return tts.isSpeaking();
     }
 
+    /**
+     * Method to stop current execution of the speech.
+     */
     public void stopTalk()
     {
         tts.stop();
