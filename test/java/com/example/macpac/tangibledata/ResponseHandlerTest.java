@@ -38,11 +38,11 @@ public class ResponseHandlerTest
     {
         ResponseHandler responseHandler = getExampleResponseHandler(0);
 
-        responseHandler.calculateSinglePulse(-1);
+        responseHandler.setSinglePulse(-1);
         assertThat(responseHandler.getPulseStength(), is(ResponseHandler.PULSE_STRENGTH_BELOW));
         assertThat(responseHandler.getSinglePulseTime(), is(ResponseHandler.SINGLE_PULSE_TIME_BELOW));
 
-        responseHandler.calculateSinglePulse(1);
+        responseHandler.setSinglePulse(1);
         assertThat(responseHandler.getPulseStength(), is(ResponseHandler.PULSE_STRENGTH_ABOVE));
         assertThat(responseHandler.getSinglePulseTime(), is(ResponseHandler.SINGLE_PULSE_TIME_ABOVE));
     }

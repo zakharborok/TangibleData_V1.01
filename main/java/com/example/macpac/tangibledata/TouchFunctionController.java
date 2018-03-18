@@ -24,6 +24,9 @@ public class TouchFunctionController extends Thread
         soundGraphGenerator = new SoundGraphGenerator(Graph.instance.getPoints());
     }
 
+    /**
+     * Method puts TouchFunctionController thread to sleep, after checks number of touches were made and additionally depending on graph type calls functions.
+     */
     @Override
     public void run()
     {

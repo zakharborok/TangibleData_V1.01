@@ -23,7 +23,7 @@ public class MToneGenerator
 
     /**
      * \brief Constructor.
-     * Method to create object which would generate sound depending on passed frequency and duration.
+     * Method to create instance of generateAndPlayTone which would generate sound depending on passed frequency and duration.
      * @param freqOfTone Frequency of desired sound.
      * @param durationInMilliSec Duration of desired sound.
      */
