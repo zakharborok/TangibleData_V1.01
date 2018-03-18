@@ -15,7 +15,7 @@ public class Speech
     private TextToSpeech tts; /**< Object to transform text into speech. */
 
     /**
-     * \brief Constrictor.
+     * \brief Constructor.
      * Method to create object which would transform text into speech(UK Local, pitch:1.3, Speech rate:1).
      */
     public Speech()

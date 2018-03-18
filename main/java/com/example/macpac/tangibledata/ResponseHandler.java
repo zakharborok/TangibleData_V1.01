@@ -31,7 +31,7 @@ public class ResponseHandler
     private long timeKeeper, timeBetweenTouch, timeBetweenVibrations;
     private int singlePulseTime, pulseStength, touchCounter, lastBarChartPressed = -1;
     private ToneGenerator toneGen1;
-    private mToneGenerator toneGenerator = new mToneGenerator();
+    private MToneGenerator toneGenerator = new MToneGenerator();
 
     public ResponseHandler(Activity parentActivity, ArrayList<Point> points, int graphType)
     {

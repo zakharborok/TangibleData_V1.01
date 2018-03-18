@@ -23,10 +23,10 @@ public class SoundGraphGenerator
     public void run()
     {
         ArrayList<Thread> soundsToPlay = new ArrayList<>();
-        ArrayList<mToneGenerator> toneGenerators = new ArrayList<>();
+        ArrayList<MToneGenerator> toneGenerators = new ArrayList<>();
         for (int i =0; i < frequenciesToPlay.size(); i++ )
         {
-            toneGenerators.add(new mToneGenerator());
+            toneGenerators.add(new MToneGenerator());
             soundsToPlay.add(toneGenerators.get(i).generateAndPlayTone(frequenciesToPlay.get(i), timeToPlay[i]));
             soundsToPlay.get(i).start();
 
