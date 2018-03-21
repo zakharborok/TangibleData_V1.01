@@ -11,17 +11,17 @@ import static java.lang.StrictMath.floor;
 
 /**
  * \class Graph
- * Class to store data about currently open graph & manipulate this data.
+ * \brief Class to store data about currently open graph & manipulate this data.
  */
 public class Graph
 {
     public static Graph instance; /**< Global reference to a single instance of the class. */
-    public static final int LINEAR_MODE = 0/**< Constant defining graph type.*/,
-                            BAR_CHART_MODE = 1/**< Constant defining graph type.*/;
-    public final int WIDTH/**< Constant which stores pixel width of a screen.*/,
-                     HEIGHT/**< Constant which stores pixel height of a screen.*/,
-                     X_OFFSET/**< Constant which stores horizontal unit of length. Used for drawing scale e.t.c.*/,
-                     Y_OFFSET/**< Constant which stores vertical unit of length. Used for drawing scale e.t.c.*/;
+    public static final int LINEAR_MODE = 0/**< Constant defining graph type.*/;
+    public static final int BAR_CHART_MODE = 1/**< Constant defining graph type.*/;
+    public final int WIDTH/**< Constant which stores pixel width of a screen.*/;
+    public final int HEIGHT/**< Constant which stores pixel height of a screen.*/;
+    public final int X_OFFSET/**< Constant which stores horizontal unit of length. Used for drawing scale e.t.c.*/;
+    public final int Y_OFFSET/**< Constant which stores vertical unit of length. Used for drawing scale e.t.c.*/;
     private int type /**< Stores graph type.*/;
     private ArrayList<Point> points /**< Stores data set.(in pixels)*/;
     private ArrayList<Point> originalPoints/**< Stores data set.(Actual values from the csv file)*/;

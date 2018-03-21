@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * \class GraphConverter
- * Class converts a csv file to a list of points and identifies the graph type based on the file format
+ * \brief Class converts a csv file to a list of points and identifies the graph type based on the file format.
  */
 public class GraphConverter {
     public static CSVFile csv; /**< Stores the csv file that is to be converted */

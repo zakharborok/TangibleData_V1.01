@@ -10,7 +10,7 @@ import static java.lang.Thread.sleep;
 
 /**
  * \class MToneGenerator
- * Class to create arbitrary frequency & time duration sound.
+ * \brief Class to create arbitrary frequency & time duration sound.
  */
 public class MToneGenerator
 {

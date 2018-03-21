@@ -32,13 +32,13 @@ public class ResponseHandler
 
     private Activity parentActivity; /**< Stores reference of a current activity. Used to create vibrations. */
     private HashMap<Integer, Integer> map; /**< Stores x,y pixel coordinates of a line graph.*/
-    private long timeKeeper/**< Stores time between user touches. Used to distinguish multiple touches and hold. Updated on any touch.*/,
-                 timeBetweenTouch/**< Stores time between user touches. Used to update touch counter.(Different from timeKeeper, as updated only on accepted touches)*/,
-                 timeBetweenVibrations/**< Stores time between each vibration. Used to create pulses of vibrations.*/;
-    private int singlePulseTime,
-                pulseStength/**< Strength of a vibration.*/,
-                touchCounter/**< Stores number of touches detected in a row.*/,
-                lastBarChartPressed = -1 /**< Stores index of last bar chart touched.*/;
+    private long timeKeeper/**< Stores time between user touches. Used to distinguish multiple touches and hold. Updated on any touch.*/;
+    private long timeBetweenTouch/**< Stores time between user touches. Used to update touch counter.(Different from timeKeeper, as updated only on accepted touches)*/;
+    private long timeBetweenVibrations/**< Stores time between each vibration. Used to create pulses of vibrations.*/;
+    private int singlePulseTime;
+    private int pulseStength/**< Strength of a vibration.*/;
+    private int touchCounter/**< Stores number of touches detected in a row.*/;
+    private int lastBarChartPressed = -1 /**< Stores index of last bar chart touched.*/;
     private ToneGenerator toneGen1/**< Builtin class to generate tone.*/;
     private MToneGenerator toneGenerator/**< Our tone generator to create arbitrary tone.*/;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 
 /**
  * \class TangibleData
- * Used to provide context for Speech class.
+ * \brief Used to provide context for Speech class.
  */
 public class TangibleData extends Application {
     private static Context mContext;

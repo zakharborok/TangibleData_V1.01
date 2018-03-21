@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * \class CSVFile
- * Class to represent and parse CSV File
+ * \brief Class to represent and parse CSV File.
  */
 public class CSVFile {
     String filePath; /**< Stores the file path of the CSV file*/

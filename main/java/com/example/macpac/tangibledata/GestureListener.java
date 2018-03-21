@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 /**
  * \class GestureListener
- * Class to listen for and identify the swipe motion from right to left to go back
+ * \brief Class to listen for and identify the swipe motion from right to left to go back.
  */
 public class GestureListener extends GestureDetector.SimpleOnGestureListener {
     private static final int SWIPE_MIN_DISTANCE = 120; /**< Minimum swipe distance*/

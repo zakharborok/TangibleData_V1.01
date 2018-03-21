@@ -8,11 +8,17 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-
+/**
+ * \class DrawView
+ * \brief Class to draw the graph based on the graph type and the points from the Graph Converter.
+ */
 public class DrawView extends View
 {
-    Paint paint = new Paint();
+    Paint paint = new Paint(); /**< holds the style and color information about how to draw geometries, text and bitmaps.*/
 
+    /**
+     * Method identifies graph type and converts the parsed values into point objects
+     */
     public DrawView(Context context)
     {
         super(context);
@@ -41,6 +47,10 @@ public class DrawView extends View
         super(context, attrs, defStyle);
     }
 
+    /**
+     * Method draws the y axis and x axis of the graph and then plots the points.
+     * @param canvas holds the draw calls
+     */
     @Override
     public void onDraw(Canvas canvas)
     {
@@ -48,6 +58,14 @@ public class DrawView extends View
         drawGraph(canvas);
     }
 
+    /**
+     * Method draws the graph depending on the graph type.
+     *
+     * Default Color: Yellow
+     * Linear Graph: Points are drawn and joined by lines
+     * Bar Graph: Points are drawn as rectangles
+     * @param canvas holds the draw calls
+     */
     private void drawGraph(Canvas canvas)
     {
         paint.setColor(Color.YELLOW);
@@ -70,6 +88,11 @@ public class DrawView extends View
             }
     }
 
+    /**
+     * Method draws lines to denote the X axis and the Y axis
+     * Default Colour: Yellow
+     * @param canvas holds the draw calls
+     */
     private void drawScale(Canvas canvas)
     {
         paint.setARGB(250,104,104,0);

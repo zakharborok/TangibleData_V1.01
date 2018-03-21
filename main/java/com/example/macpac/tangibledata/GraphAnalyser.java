@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * \class GraphAnalyser
- * Class to analyse a graph and proide a descrition based on its type
+ * \brief Class to analyse a graph and provide a description based on its type.
  */
 public class GraphAnalyser {
     private String description; /**< String to represent the description of the graph */

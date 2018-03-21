@@ -22,14 +22,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * /class Menu
- * Class to display csv files as a list view when the application launches
+ * \class Menu
+ * \brief Class to display csv files as a list view when the application launches.
  */
 public class Menu extends ListActivity {
-    private ArrayList<String> fileList = new ArrayList<String>(); /**< List of all the csv file names*/
-    private GraphFileManager graphFileManager = new GraphFileManager(); /**< FileManager is used to find csv files in a given folder */
+    private ArrayList<String> fileList = new ArrayList<String>(); /**< List of all the csv file names. */
+    private GraphFileManager graphFileManager = new GraphFileManager(); /**< FileManager is used to find csv files in a given folder. */
     private ListView lv; /**< Globally defined list view that is displayed in the view */
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123; /**< Request code for permissions to access storage*/
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123; /**< Request code for permissions to access storage. */
 
     /**
      * Method runs when the application is first launched, it sets the content view to display the activity menu.

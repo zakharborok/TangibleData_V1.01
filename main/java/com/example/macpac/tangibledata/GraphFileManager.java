@@ -12,7 +12,7 @@ import java.util.Queue;
 
 /**
  * \class GraphFileManager
- * Class to find csv files in a directory and get their file names
+ * \brief Class to find csv files in a directory and get their file names.
  */
 public class GraphFileManager
 {
