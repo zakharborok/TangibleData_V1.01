@@ -53,15 +53,12 @@ public class ResponseHandler
     {
         this.parentActivity = parentActivity;
         map = new HashMap<>();
-        toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        toneGenerator = new MToneGenerator();
         singlePulseTime = 100;
         pulseStength = -1;
         touchCounter = 0;
         timeKeeper = 0;
         timeBetweenTouch = 0;
         timeBetweenVibrations = 0;
-        TouchFunctionController.instanse = new TouchFunctionController(this);
 
         switch (graphType)
         {
@@ -82,6 +79,9 @@ public class ResponseHandler
     public ResponseHandler(Activity parentActivity)
     {
         this(parentActivity, Graph.instance.getPoints(), Graph.instance.getType());
+        toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        toneGenerator = new MToneGenerator();
+        TouchFunctionController.instanse = new TouchFunctionController(this);
     }
 
     /**
@@ -353,7 +353,7 @@ public class ResponseHandler
      * @param listOfPoints Data set.
      * @return smallest y-coordinate.
      */
-    private float findTheSmallesYVal(ArrayList<Point> listOfPoints)
+    public float findTheSmallesYVal(ArrayList<Point> listOfPoints)
     {
         float min = listOfPoints.get(0).y;
         if (listOfPoints.size() > 0)
@@ -373,7 +373,7 @@ public class ResponseHandler
      * @param listOfPoints Data set.
      * @return largest x-coordinate.
      */
-    private float findTheLargestXVal(ArrayList<Point> listOfPoints)
+    public float findTheLargestXVal(ArrayList<Point> listOfPoints)
     {
         float max = 0;
         if (listOfPoints.size() > 0)
@@ -393,7 +393,7 @@ public class ResponseHandler
      * @param listOfPoints Data set.
      * @return smallest x-coordinate.
      */
-    private float findTheSmallesXVal(ArrayList<Point> listOfPoints)
+    public float findTheSmallesXVal(ArrayList<Point> listOfPoints)
     {
         float min = listOfPoints.get(0).x;
         if (listOfPoints.size() > 0)
